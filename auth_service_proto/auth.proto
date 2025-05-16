@@ -1,0 +1,223 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/JunBSer/services_proto/auth_service_proto/gen;proto";
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+    info: {
+        title: "Auth Service API";
+        version: "1.0";
+        contact: {
+            name: "JunBSer";
+            url: "https://github.com/JunBSer";
+            email: "aleksei.radzetskiiw@gmail.com";
+        };
+        license: {
+            name: "MIT";
+            url: "https://opensource.org/licenses/MIT";
+        };
+    };
+
+    host: "localhost:8080";
+    schemes: HTTP;
+
+    consumes: "application/json";
+    produces: "application/json";
+
+    security_definitions: {
+        security: {
+            key: "bearerAuth";
+            value: {
+                type: TYPE_API_KEY;
+                in: IN_HEADER;
+                name: "Authorization";
+                description: "JWT authentication using the Bearer scheme. Example: 'Bearer {token}'";
+            }
+        }
+    };
+
+    security: {
+        security_requirement: {
+            key: "bearerAuth";
+            value: {};
+        }
+    };
+};
+
+service Auth {
+    rpc Login(LoginRequest) returns (LoginResponse) {
+        option (google.api.http) = {
+            post: "/login"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "User login"
+            description: "Authenticates user and returns JWT tokens"
+            tags: "Authentication"
+            responses: {
+                key: "200"
+                value: {
+                    description: "Success response with tokens"
+                    schema: {
+                        json_schema: {
+                            ref: ".proto.LoginResponse"
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    rpc Logout(LogoutRequest) returns (LogoutResponse) {
+        option (google.api.http) = {
+            post: "/logout"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "User logout"
+            description: "Invalidates user's authentication tokens"
+            tags: "Authentication"
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                    value: {};
+                }
+            }
+        };
+    }
+
+    rpc Register(RegisterRequest) returns (RegisterResponse) {
+        option (google.api.http) = {
+            post: "/register"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Register new user"
+            description: "Creates new user account and returns initial tokens"
+            tags: "Authentication"
+        };
+    }
+
+    rpc DeleteUser(DeleteRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+            delete: "/user/delete"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Delete user account"
+            description: "Permanently deletes user account"
+            tags: "User Management"
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                    value: {};
+                }
+            }
+        };
+    }
+
+    rpc RefreshToken(RefreshRequest) returns (RefreshResponse) {
+        option (google.api.http) = {
+            post: "/refresh"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Refresh tokens"
+            description: "Generates new JWT pair using refresh token"
+            tags: "Authentication"
+        };
+    }
+}
+
+message JWTPair {
+    string JWT = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "JSON Web Token for authentication",
+        }
+    ];
+    string RT = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Refresh token for token renewal",
+        }
+    ];
+}
+
+message RefreshRequest {
+    string RT = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Valid refresh token",
+        }
+    ];
+}
+
+message RefreshResponse {
+    JWTPair pair = 1;
+}
+
+message LoginRequest {
+    string login = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's login identifier",
+        }
+    ];
+    string password = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's password",
+        }
+    ];
+}
+
+message LoginResponse {
+    JWTPair pair = 1;
+}
+
+message LogoutRequest {
+    string JWT = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Current JWT token",
+        }
+    ];
+}
+
+message LogoutResponse {
+    Status status = 1;
+}
+
+message RegisterRequest {
+    string login = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New user login/email",
+        }
+    ];
+    string password = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Password for new account",
+        }
+    ];
+}
+
+message RegisterResponse {
+    JWTPair pair = 1;
+}
+
+message DeleteRequest {
+    string JWT = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Valid JWT token for authentication",
+        }
+    ];
+}
+
+message DeleteResponse {
+    Status status = 1;
+}
+
+enum Status {
+    STATUS_UNSPECIFIED = 0 ;
+    STATUS_SUCCESS = 1 ;
+    STATUS_ERROR = 2 ;
+}
