@@ -2,9 +2,9 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        v6.30.2
-// source: auth_service_proto/auth.proto
+// source: proto/auth.proto
 
-package gen
+package authpb
 
 import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
@@ -56,11 +56,11 @@ func (x Status) String() string {
 }
 
 func (Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_auth_service_proto_auth_proto_enumTypes[0].Descriptor()
+	return file_proto_auth_proto_enumTypes[0].Descriptor()
 }
 
 func (Status) Type() protoreflect.EnumType {
-	return &file_auth_service_proto_auth_proto_enumTypes[0]
+	return &file_proto_auth_proto_enumTypes[0]
 }
 
 func (x Status) Number() protoreflect.EnumNumber {
@@ -69,7 +69,7 @@ func (x Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Status.Descriptor instead.
 func (Status) EnumDescriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{0}
+	return file_proto_auth_proto_rawDescGZIP(), []int{0}
 }
 
 type JWTPair struct {
@@ -82,7 +82,7 @@ type JWTPair struct {
 
 func (x *JWTPair) Reset() {
 	*x = JWTPair{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[0]
+	mi := &file_proto_auth_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -94,7 +94,7 @@ func (x *JWTPair) String() string {
 func (*JWTPair) ProtoMessage() {}
 
 func (x *JWTPair) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[0]
+	mi := &file_proto_auth_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -107,7 +107,7 @@ func (x *JWTPair) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JWTPair.ProtoReflect.Descriptor instead.
 func (*JWTPair) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{0}
+	return file_proto_auth_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *JWTPair) GetJWT() string {
@@ -133,7 +133,7 @@ type RefreshRequest struct {
 
 func (x *RefreshRequest) Reset() {
 	*x = RefreshRequest{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[1]
+	mi := &file_proto_auth_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -145,7 +145,7 @@ func (x *RefreshRequest) String() string {
 func (*RefreshRequest) ProtoMessage() {}
 
 func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[1]
+	mi := &file_proto_auth_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -158,7 +158,7 @@ func (x *RefreshRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshRequest.ProtoReflect.Descriptor instead.
 func (*RefreshRequest) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{1}
+	return file_proto_auth_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *RefreshRequest) GetRT() string {
@@ -177,7 +177,7 @@ type RefreshResponse struct {
 
 func (x *RefreshResponse) Reset() {
 	*x = RefreshResponse{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -189,7 +189,7 @@ func (x *RefreshResponse) String() string {
 func (*RefreshResponse) ProtoMessage() {}
 
 func (x *RefreshResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[2]
+	mi := &file_proto_auth_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -202,7 +202,7 @@ func (x *RefreshResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RefreshResponse.ProtoReflect.Descriptor instead.
 func (*RefreshResponse) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{2}
+	return file_proto_auth_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *RefreshResponse) GetPair() *JWTPair {
@@ -222,7 +222,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -234,7 +234,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[3]
+	mi := &file_proto_auth_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -247,7 +247,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{3}
+	return file_proto_auth_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *LoginRequest) GetLogin() string {
@@ -273,7 +273,7 @@ type LoginResponse struct {
 
 func (x *LoginResponse) Reset() {
 	*x = LoginResponse{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -285,7 +285,7 @@ func (x *LoginResponse) String() string {
 func (*LoginResponse) ProtoMessage() {}
 
 func (x *LoginResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[4]
+	mi := &file_proto_auth_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -298,7 +298,7 @@ func (x *LoginResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginResponse.ProtoReflect.Descriptor instead.
 func (*LoginResponse) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{4}
+	return file_proto_auth_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *LoginResponse) GetPair() *JWTPair {
@@ -317,7 +317,7 @@ type LogoutRequest struct {
 
 func (x *LogoutRequest) Reset() {
 	*x = LogoutRequest{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -329,7 +329,7 @@ func (x *LogoutRequest) String() string {
 func (*LogoutRequest) ProtoMessage() {}
 
 func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[5]
+	mi := &file_proto_auth_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -342,7 +342,7 @@ func (x *LogoutRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutRequest.ProtoReflect.Descriptor instead.
 func (*LogoutRequest) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{5}
+	return file_proto_auth_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *LogoutRequest) GetJWT() string {
@@ -361,7 +361,7 @@ type LogoutResponse struct {
 
 func (x *LogoutResponse) Reset() {
 	*x = LogoutResponse{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -373,7 +373,7 @@ func (x *LogoutResponse) String() string {
 func (*LogoutResponse) ProtoMessage() {}
 
 func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[6]
+	mi := &file_proto_auth_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -386,7 +386,7 @@ func (x *LogoutResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LogoutResponse.ProtoReflect.Descriptor instead.
 func (*LogoutResponse) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{6}
+	return file_proto_auth_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *LogoutResponse) GetStatus() Status {
@@ -406,7 +406,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -418,7 +418,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[7]
+	mi := &file_proto_auth_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -431,7 +431,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{7}
+	return file_proto_auth_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *RegisterRequest) GetLogin() string {
@@ -457,7 +457,7 @@ type RegisterResponse struct {
 
 func (x *RegisterResponse) Reset() {
 	*x = RegisterResponse{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -469,7 +469,7 @@ func (x *RegisterResponse) String() string {
 func (*RegisterResponse) ProtoMessage() {}
 
 func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[8]
+	mi := &file_proto_auth_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -482,7 +482,7 @@ func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
 func (*RegisterResponse) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{8}
+	return file_proto_auth_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *RegisterResponse) GetPair() *JWTPair {
@@ -501,7 +501,7 @@ type DeleteRequest struct {
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[9]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -513,7 +513,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[9]
+	mi := &file_proto_auth_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -526,7 +526,7 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{9}
+	return file_proto_auth_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *DeleteRequest) GetJWT() string {
@@ -545,7 +545,7 @@ type DeleteResponse struct {
 
 func (x *DeleteResponse) Reset() {
 	*x = DeleteResponse{}
-	mi := &file_auth_service_proto_auth_proto_msgTypes[10]
+	mi := &file_proto_auth_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -557,7 +557,7 @@ func (x *DeleteResponse) String() string {
 func (*DeleteResponse) ProtoMessage() {}
 
 func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_auth_service_proto_auth_proto_msgTypes[10]
+	mi := &file_proto_auth_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -570,7 +570,7 @@ func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_auth_service_proto_auth_proto_rawDescGZIP(), []int{10}
+	return file_proto_auth_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *DeleteResponse) GetStatus() Status {
@@ -580,11 +580,11 @@ func (x *DeleteResponse) GetStatus() Status {
 	return Status_STATUS_UNSPECIFIED
 }
 
-var File_auth_service_proto_auth_proto protoreflect.FileDescriptor
+var File_proto_auth_proto protoreflect.FileDescriptor
 
-const file_auth_service_proto_auth_proto_rawDesc = "" +
+const file_proto_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x1dauth_service_proto/auth.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"y\n" +
+	"\x10proto/auth.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\"y\n" +
 	"\aJWTPair\x128\n" +
 	"\x03JWT\x18\x01 \x01(\tB&\x92A#2!JSON Web Token for authenticationR\x03JWT\x124\n" +
 	"\x02RT\x18\x02 \x01(\tB$\x92A!2\x1fRefresh token for token renewalR\x02RT\":\n" +
@@ -635,7 +635,7 @@ const file_auth_service_proto_auth_proto_rawDesc = "" +
 	"\n" +
 	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11:\x01**\f/user/delete\x12\xa1\x01\n" +
 	"\fRefreshToken\x12\x15.proto.RefreshRequest\x1a\x16.proto.RefreshResponse\"b\x92AL\n" +
-	"\x0eAuthentication\x12\x0eRefresh tokens\x1a*Generates new JWT pair using refresh token\x82\xd3\xe4\x93\x02\r:\x01*\"\b/refreshB\xff\x02\x92A\xc1\x02\x12\x89\x01\n" +
+	"\x0eAuthentication\x12\x0eRefresh tokens\x1a*Generates new JWT pair using refresh token\x82\xd3\xe4\x93\x02\r:\x01*\"\b/refreshB\xf6\x02\x92A\xc1\x02\x12\x89\x01\n" +
 	"\x10Auth Service API\"D\n" +
 	"\aJunBSer\x12\x1ahttps://github.com/JunBSer\x1a\x1daleksei.radzetskiiw@gmail.com**\n" +
 	"\x03MIT\x12#https://opensource.org/licenses/MIT2\x031.0\x1a\x0elocalhost:8080*\x01\x012\x10application/json:\x10application/jsonZj\n" +
@@ -644,23 +644,23 @@ const file_auth_service_proto_auth_proto_rawDesc = "" +
 	"bearerAuth\x12Z\b\x02\x12EJWT authentication using the Bearer scheme. Example: 'Bearer {token}'\x1a\rAuthorization \x02b\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00Z8github.com/JunBSer/services_proto/auth_service_proto/genb\x06proto3"
+	"bearerAuth\x12\x00Z/github.com/JunBSer/services_proto/gen/go;authpbb\x06proto3"
 
 var (
-	file_auth_service_proto_auth_proto_rawDescOnce sync.Once
-	file_auth_service_proto_auth_proto_rawDescData []byte
+	file_proto_auth_proto_rawDescOnce sync.Once
+	file_proto_auth_proto_rawDescData []byte
 )
 
-func file_auth_service_proto_auth_proto_rawDescGZIP() []byte {
-	file_auth_service_proto_auth_proto_rawDescOnce.Do(func() {
-		file_auth_service_proto_auth_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_auth_service_proto_auth_proto_rawDesc), len(file_auth_service_proto_auth_proto_rawDesc)))
+func file_proto_auth_proto_rawDescGZIP() []byte {
+	file_proto_auth_proto_rawDescOnce.Do(func() {
+		file_proto_auth_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_auth_proto_rawDesc), len(file_proto_auth_proto_rawDesc)))
 	})
-	return file_auth_service_proto_auth_proto_rawDescData
+	return file_proto_auth_proto_rawDescData
 }
 
-var file_auth_service_proto_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_auth_service_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
-var file_auth_service_proto_auth_proto_goTypes = []any{
+var file_proto_auth_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_proto_auth_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_auth_proto_goTypes = []any{
 	(Status)(0),              // 0: proto.Status
 	(*JWTPair)(nil),          // 1: proto.JWTPair
 	(*RefreshRequest)(nil),   // 2: proto.RefreshRequest
@@ -674,7 +674,7 @@ var file_auth_service_proto_auth_proto_goTypes = []any{
 	(*DeleteRequest)(nil),    // 10: proto.DeleteRequest
 	(*DeleteResponse)(nil),   // 11: proto.DeleteResponse
 }
-var file_auth_service_proto_auth_proto_depIdxs = []int32{
+var file_proto_auth_proto_depIdxs = []int32{
 	1,  // 0: proto.RefreshResponse.pair:type_name -> proto.JWTPair
 	1,  // 1: proto.LoginResponse.pair:type_name -> proto.JWTPair
 	0,  // 2: proto.LogoutResponse.status:type_name -> proto.Status
@@ -697,27 +697,27 @@ var file_auth_service_proto_auth_proto_depIdxs = []int32{
 	0,  // [0:5] is the sub-list for field type_name
 }
 
-func init() { file_auth_service_proto_auth_proto_init() }
-func file_auth_service_proto_auth_proto_init() {
-	if File_auth_service_proto_auth_proto != nil {
+func init() { file_proto_auth_proto_init() }
+func file_proto_auth_proto_init() {
+	if File_proto_auth_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_auth_service_proto_auth_proto_rawDesc), len(file_auth_service_proto_auth_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_auth_proto_rawDesc), len(file_proto_auth_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_auth_service_proto_auth_proto_goTypes,
-		DependencyIndexes: file_auth_service_proto_auth_proto_depIdxs,
-		EnumInfos:         file_auth_service_proto_auth_proto_enumTypes,
-		MessageInfos:      file_auth_service_proto_auth_proto_msgTypes,
+		GoTypes:           file_proto_auth_proto_goTypes,
+		DependencyIndexes: file_proto_auth_proto_depIdxs,
+		EnumInfos:         file_proto_auth_proto_enumTypes,
+		MessageInfos:      file_proto_auth_proto_msgTypes,
 	}.Build()
-	File_auth_service_proto_auth_proto = out.File
-	file_auth_service_proto_auth_proto_goTypes = nil
-	file_auth_service_proto_auth_proto_depIdxs = nil
+	File_proto_auth_proto = out.File
+	file_proto_auth_proto_goTypes = nil
+	file_proto_auth_proto_depIdxs = nil
 }
