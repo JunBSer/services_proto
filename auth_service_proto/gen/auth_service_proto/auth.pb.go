@@ -4,7 +4,7 @@
 // 	protoc        v6.30.2
 // source: auth_service_proto/auth.proto
 
-package proto
+package auth_service_proto
 
 import (
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
@@ -635,7 +635,7 @@ const file_auth_service_proto_auth_proto_rawDesc = "" +
 	"\n" +
 	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11:\x01**\f/user/delete\x12\xa1\x01\n" +
 	"\fRefreshToken\x12\x15.proto.RefreshRequest\x1a\x16.proto.RefreshResponse\"b\x92AL\n" +
-	"\x0eAuthentication\x12\x0eRefresh tokens\x1a*Generates new JWT pair using refresh token\x82\xd3\xe4\x93\x02\r:\x01*\"\b/refreshB\xd1\x02\x92A\xc1\x02\x12\x89\x01\n" +
+	"\x0eAuthentication\x12\x0eRefresh tokens\x1a*Generates new JWT pair using refresh token\x82\xd3\xe4\x93\x02\r:\x01*\"\b/refreshB\x92\x03\x92A\xc1\x02\x12\x89\x01\n" +
 	"\x10Auth Service API\"D\n" +
 	"\aJunBSer\x12\x1ahttps://github.com/JunBSer\x1a\x1daleksei.radzetskiiw@gmail.com**\n" +
 	"\x03MIT\x12#https://opensource.org/licenses/MIT2\x031.0\x1a\x0elocalhost:8080*\x01\x012\x10application/json:\x10application/jsonZj\n" +
@@ -644,8 +644,7 @@ const file_auth_service_proto_auth_proto_rawDesc = "" +
 	"bearerAuth\x12Z\b\x02\x12EJWT authentication using the Bearer scheme. Example: 'Bearer {token}'\x1a\rAuthorization \x02b\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00Z\n" +
-	"/gen;protob\x06proto3"
+	"bearerAuth\x12\x00ZKgithub.com/JunBSer/services_proto/auth_service_proto/gen/auth_service_protob\x06proto3"
 
 var (
 	file_auth_service_proto_auth_proto_rawDescOnce sync.Once
