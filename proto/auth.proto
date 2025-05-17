@@ -6,11 +6,12 @@ option go_package = "github.com/JunBSer/services_proto/gen/go;authpb";
 
 import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
         title: "Auth Service API";
-        version: "1.0";
+        version: "2.0";
         contact: {
             name: "JunBSer";
             url: "https://github.com/JunBSer";
@@ -24,8 +25,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 
     host: "localhost:8080";
     schemes: HTTP;
-    schemes: HTTPS;
-    
+
     consumes: "application/json";
     produces: "application/json";
 
@@ -33,62 +33,47 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         security: {
             key: "bearerAuth";
             value: {
-                description: "JWT authentication using the Bearer scheme";
+                description: "JWT Authentication. Format: 'Bearer {token}'";
             }
         }
     };
 };
 
 service Auth {
-    // methods that aren't subject to auth middleware 
+    // Public endpoints
     rpc Login(LoginRequest) returns (LoginResponse) {
         option (google.api.http) = {
             post: "/v1/auth/login"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "User login"
-            description: "Authenticates user and returns JWT tokens"
-            tags: "Authentication"
+            summary: "User login";
+            description: "Authenticates user and returns JWT tokens";
+            tags: "Authentication";
+
             responses: {
                 key: "200"
                 value: {
-                    description: "Success response with tokens"
+                    description: "Success response with tokens";
                     schema: {
                         json_schema: {
-                            ref: "#/definitions/protoLoginResponse"
+                            ref: "#/definitions/proto.LoginResponse";
                         }
                     }
                 }
             }
-            responses: {
+
+            responses:{
                 key: "400"
                 value: {
-                    description: "Invalid request parameters"
+                    description: "Invalid credentials";
                 }
             }
-        };
-    }
 
-    rpc Logout(LogoutRequest) returns (LogoutResponse) {
-        option (google.api.http) = {
-            post: "/v1/auth/logout"
-            body: "*"
-        };
-        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "User logout"
-            description: "Invalidates user's authentication tokens"
-            tags: "Authentication"
-            security: {
-                security_requirement: {
-                    key: "bearerAuth";
-                    value: {};
-                }
-            }
-            responses: {
-                key: "204"
+            responses:{
+                key: "401"
                 value: {
-                    description: "Successfully logged out"
+                    description: "Unauthorized";
                 }
             }
         };
@@ -100,73 +85,98 @@ service Auth {
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "Register new user"
-            description: "Creates new user account and returns initial tokens"
-            tags: "Authentication"
+            summary: "Register new user";
+            description: "Creates new user account";
+            tags: "Authentication";
             responses: {
                 key: "201"
                 value: {
-                    description: "User created successfully"
+                    description: "User created successfully";
+                }
+            }
+
+            responses:{
+                key: "400"
+                value: {
+                    description: "Invalid request";
+                }
+            }
+
+            responses:{
+                key: "409"
+                value: {
+                    description: "User already exists";
                 }
             }
         };
     }
 
-
-    rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {
+    // Authenticated user endpoints
+    rpc Logout(LogoutRequest) returns (LogoutResponse) {
         option (google.api.http) = {
-            put: "/v1/users/set_password"
+            post: "/v1/auth/logout"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "Change user password"
-            description: "Updates user's password"
-            tags: "User Management"
+            summary: "User logout";
+            description: "Invalidates user's authentication tokens";
+            tags: "Authentication";
             security: {
                 security_requirement: {
                     key: "bearerAuth";
-                    value: {};
                 }
             }
             responses: {
                 key: "204"
                 value: {
-                    description: "Password changed successfully"
+                    description: "Successfully logged out";
+                }
+            }
+            responses:{
+                key: "401"
+                value: {
+                    description: "Unauthorized";
                 }
             }
         };
     }
 
-    rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-
-    // methods that are subject to auth middleware
-
-
-    // admin method
-    rpc DeleteUser(DeleteRequest) returns (DeleteResponse) {
+    rpc ChangePassword(ChangePasswordRequest) returns (ChangePasswordResponse) {
         option (google.api.http) = {
-            delete: "/v1/users/{user_id}"
+            put: "/v1/users/me/password"
+            body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "Delete user account"
-            description: "Permanently deletes user account"
-            tags: "User Management"
+            summary: "Change user password";
+            description: "Updates authenticated user's password";
+            tags: "User Management";
             security: {
                 security_requirement: {
                     key: "bearerAuth";
-                    value: {};
                 }
             }
             responses: {
                 key: "204"
                 value: {
-                    description: "User deleted successfully"
+                    description: "Password changed successfully";
                 }
             }
+
+            responses:{
+                key: "400"
+                value: {
+                    description: "Invalid request";
+                }
+            }
+            responses:{
+                key: "401"
+                value: {
+                    description: "Unauthorized";
+                }
+            }
+
         };
     }
-
-    //user methods
 
     rpc RefreshToken(RefreshRequest) returns (RefreshResponse) {
         option (google.api.http) = {
@@ -174,19 +184,241 @@ service Auth {
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-            summary: "Refresh tokens"
-            description: "Generates new JWT pair using refresh token"
-            tags: "Authentication"
+            summary: "Refresh tokens";
+            description: "Generates new JWT pair using refresh token";
+            tags: "Authentication";
             responses: {
                 key: "200"
                 value: {
-                    description: "New tokens generated"
+                    description: "New tokens generated";
+                }
+            }
+            responses:{
+                key: "401"
+                value: {
+                    description: "Invalid refresh token";
+                }
+            }
+        };
+    }
+
+    rpc DeleteAccount(DeleteAccountRequest) returns (Status) {
+        option (google.api.http) = {
+            delete: "/v1/users/me"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Delete user account";
+            description: "Permanently delete current user's account";
+            tags: "User Management";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "204"
+                value: {
+                    description: "Account deleted successfully";
+                }
+            }
+
+            responses:{
+                key: "400"
+                value: {
+                    description: "Invalid password";
+                }
+            }
+
+            responses:{
+                key: "401"
+                value: {
+                    description: "Unauthorized";
+                }
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden";
+                }
+            }
+
+        };
+    }
+
+
+    rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+
+    // Admin endpoints
+    rpc CreateUser(CreateUserRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            post: "/v1/admin/users"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Create new user (Admin)";
+            description: "Create new user account with specified parameters";
+            tags: "Admin";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "201"
+                value: {
+                    description: "User created successfully";
+                }
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden - admin access required";
+                }
+            }
+        };
+    }
+
+    rpc GetUser(GetUserRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            get: "/v1/admin/users/{user_id}"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Get user details (Admin)";
+            description: "Retrieve detailed user information";
+            tags: "Admin";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "200"
+                value: {
+                    description: "User details retrieved";
+                }
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden - admin access required";
+                }
+            }
+            responses:{
+                key: "404"
+                value: {
+                    description: "User not found";
+                }
+            }
+        };
+    }
+
+    rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+        option (google.api.http) = {
+            get: "/v1/admin/users"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "List users (Admin)";
+            description: "Retrieve paginated list of users";
+            tags: "Admin";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "200"
+                value: {
+                    description: "Users list retrieved";
+                }
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden - admin access required";
+                }
+            }
+        };
+    }
+
+    rpc UpdateUser(UpdateUserRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            put: "/v1/admin/users/{user_id}"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Update user (Admin)";
+            description: "Update user details and permissions";
+            tags: "Admin";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "200"
+                value: {
+                    description: "User updated successfully";
+                }
+
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden - admin access required";
+                }
+            }
+            responses:{
+                key: "404"
+                value: {
+                    description: "User not found";
+                }
+            }
+        };
+    }
+
+    rpc DeleteUser(DeleteRequest) returns (DeleteResponse) {
+        option (google.api.http) = {
+            delete: "/v1/admin/users/{user_id}"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Delete user (Admin)";
+            description: "Permanently delete user account";
+            tags: "Admin";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
+                }
+            }
+            responses: {
+                key: "204"
+                value: {
+                    description: "User deleted successfully";
+                }
+            }
+            responses:{
+                key: "403"
+                value: {
+                    description: "Forbidden - admin access required";
+                }
+            }
+            responses:{
+                key: "404"
+                value: {
+                    description: "User not found";
                 }
             }
         };
     }
 }
 
+// Common messages
+message UUID {
+    string value = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "UUID v4 in string format",
+        }
+    ];
+}
 
 message JWTPair {
     string access_token = 1 [
@@ -194,7 +426,7 @@ message JWTPair {
             description: "Access token for API authorization",
         }
     ];
-    
+
     string refresh_token = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Refresh token for obtaining new access tokens",
@@ -202,26 +434,20 @@ message JWTPair {
     ];
 }
 
-
-message RefreshRequest {
-    string refresh_token = 1 [
-        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "Valid refresh token",
-        }
-    ];
+message Status {
+    bool success = 1;
+    string message = 2;
+    int32 code = 3;
 }
 
-message RefreshResponse{
-    JWTPair tokens = 1;
-}
-
+// Authentication messages
 message LoginRequest {
     string email = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's email address",
         }
     ];
-    
+
     string password = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's password",
@@ -234,28 +460,13 @@ message LoginResponse {
     JWTPair tokens = 1;
 }
 
-
-message LogoutRequest {
-    string refresh_token = 1 [
-        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "Refresh token to invalidate",           
-        }
-    ];
-}
-
-
-message LogoutResponse {
-    Status status = 1;
-}
-
-
 message RegisterRequest {
     string email = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's email address",
         }
     ];
-    
+
     string password = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Desired password",
@@ -264,26 +475,60 @@ message RegisterRequest {
     ];
 }
 
-
 message RegisterResponse {
-    JWTPair tokens = 1;
-}
-
-
-message DeleteRequest {
-    string user_id = 1 [
+    UUID user_id = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "ID of the user to delete",
-            example: "550e8400-e29b-41d4-a716-446655440000"
+            description: "Created user ID (UUID v4)"
         }
     ];
 }
 
+message LogoutRequest {
+    string refresh_token = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Refresh token to invalidate",
+        }
+    ];
+}
 
-message DeleteResponse {
+message LogoutResponse {
     Status status = 1;
 }
 
+// Password management
+message ChangePasswordRequest {
+    string old_password = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Current password",
+            format: "password",
+        }
+    ];
+
+    string new_password = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New password",
+            format: "password",
+        }
+    ];
+}
+
+message ChangePasswordResponse {
+    Status status = 1;
+}
+
+// Token management
+message RefreshRequest {
+    string refresh_token = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Valid refresh token",
+        }
+
+    ];
+}
+
+message RefreshResponse {
+    JWTPair tokens = 1;
+}
 
 message ValidateTokenRequest {
     string token = 1 [
@@ -297,37 +542,123 @@ message ValidateTokenResponse {
     bool is_valid = 1;
     int64 expires_at = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "Token expiration timestamp",
-            example: "1678901234"
+            description: "Token expiration timestamp (Unix)",
+        }
+    ];
+    UUID user_id = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User ID from the token (UUID v4)"
         }
     ];
 }
 
-message ChangePasswordRequest {    
-    string JWT = 1;
-    string old_password = 2 [
+// Admin management messages
+message CreateUserRequest {
+    string email = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "Current password",
-            format: "password"
+            description: "User's email address",
         }
     ];
-    
-    string new_password = 3 [
+    string password = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "New password",
-            format: "password"
+            description: "Initial password",
+            format: "password",
+        }
+    ];
+    bool is_admin = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Grant admin privileges"
         }
     ];
 }
 
+message GetUserRequest {
+    string user_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User ID to retrieve (UUID v4)"
+        }
+    ];
+}
 
-message ChangePasswordResponse {
+message ListUsersRequest {
+    int32 page = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Page number",
+            default: "1"
+        }
+    ];
+    int32 limit = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Items per page",
+            default: "20",
+            maximum: 100
+        }
+    ];
+}
+
+message ListUsersResponse {
+    repeated UserResponse users = 1;
+    int32 total = 2;
+    int32 page = 3;
+}
+
+message UpdateUserRequest {
+    string user_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User ID to update (UUID v4)"
+        }
+    ];
+    string email = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New email address",
+        }
+    ];
+    bool is_admin = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Admin status"
+        }
+    ];
+}
+
+message DeleteRequest {
+    string user_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User ID to delete (UUID v4)"
+        }
+    ];
+}
+
+message DeleteResponse {
     Status status = 1;
 }
 
+message UserResponse {
+    UUID user_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Unique user ID (UUID v4)"
+        }
+    ];
+    string email = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's email address",
+        }
+    ];
+    bool is_admin = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Admin status"
+        }
+    ];
+    google.protobuf.Timestamp created_at = 4 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User creation timestamp"
+        }
+    ];
+}
 
-enum Status {
-    STATUS_UNSPECIFIED = 0;
-    STATUS_SUCCESS = 1;
-    STATUS_ERROR = 2;
+message DeleteAccountRequest {
+    string password = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's password for confirmation",
+        }
+    ];
 }
