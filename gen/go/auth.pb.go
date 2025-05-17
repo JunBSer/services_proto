@@ -282,6 +282,7 @@ type RegisterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -326,6 +327,13 @@ func (x *RegisterRequest) GetEmail() string {
 func (x *RegisterRequest) GetPassword() string {
 	if x != nil {
 		return x.Password
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -695,7 +703,7 @@ func (x *ValidateTokenRequest) GetToken() string {
 type ValidateTokenResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	IsValid       bool                   `protobuf:"varint,1,opt,name=is_valid,json=isValid,proto3" json:"is_valid,omitempty"`
-	ExpiresAt     int64                  `protobuf:"varint,2,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	UserId        *UUID                  `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -738,11 +746,11 @@ func (x *ValidateTokenResponse) GetIsValid() bool {
 	return false
 }
 
-func (x *ValidateTokenResponse) GetExpiresAt() int64 {
+func (x *ValidateTokenResponse) GetExpiresAt() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresAt
 	}
-	return 0
+	return nil
 }
 
 func (x *ValidateTokenResponse) GetUserId() *UUID {
@@ -755,9 +763,10 @@ func (x *ValidateTokenResponse) GetUserId() *UUID {
 // Admin management messages
 type CreateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
-	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
-	IsAdmin       bool                   `protobuf:"varint,3,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
+	IsAdmin       bool                   `protobuf:"varint,4,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -790,6 +799,13 @@ func (x *CreateUserRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateUserRequest.ProtoReflect.Descriptor instead.
 func (*CreateUserRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *CreateUserRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 func (x *CreateUserRequest) GetEmail() string {
@@ -972,8 +988,9 @@ func (x *ListUsersResponse) GetPage() int32 {
 type UpdateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	IsAdmin       bool                   `protobuf:"varint,3,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	IsAdmin       bool                   `protobuf:"varint,4,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1011,6 +1028,13 @@ func (*UpdateUserRequest) Descriptor() ([]byte, []int) {
 func (x *UpdateUserRequest) GetUserId() string {
 	if x != nil {
 		return x.UserId
+	}
+	return ""
+}
+
+func (x *UpdateUserRequest) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -1120,9 +1144,10 @@ func (x *DeleteResponse) GetStatus() *Status {
 type UserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        *UUID                  `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	IsAdmin       bool                   `protobuf:"varint,3,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	IsAdmin       bool                   `protobuf:"varint,4,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1162,6 +1187,13 @@ func (x *UserResponse) GetUserId() *UUID {
 		return x.UserId
 	}
 	return nil
+}
+
+func (x *UserResponse) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
 }
 
 func (x *UserResponse) GetEmail() string {
@@ -1247,10 +1279,11 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x05email\x18\x01 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12;\n" +
 	"\bpassword\x18\x02 \x01(\tB\x1f\x92A\x1c2\x0fUser's password\xa2\x02\bpasswordR\bpassword\"7\n" +
 	"\rLoginResponse\x12&\n" +
-	"\x06tokens\x18\x01 \x01(\v2\x0e.proto.JWTPairR\x06tokens\"\x80\x01\n" +
+	"\x06tokens\x18\x01 \x01(\v2\x0e.proto.JWTPairR\x06tokens\"\xae\x01\n" +
 	"\x0fRegisterRequest\x12/\n" +
 	"\x05email\x18\x01 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12<\n" +
-	"\bpassword\x18\x02 \x01(\tB \x92A\x1d2\x10Desired password\xa2\x02\bpasswordR\bpassword\"X\n" +
+	"\bpassword\x18\x02 \x01(\tB \x92A\x1d2\x10Desired password\xa2\x02\bpasswordR\bpassword\x12,\n" +
+	"\x04name\x18\x03 \x01(\tB\x18\x92A\x152\x13User's display nameR\x04name\"X\n" +
 	"\x10RegisterResponse\x12D\n" +
 	"\auser_id\x18\x01 \x01(\v2\v.proto.UUIDB\x1e\x92A\x1b2\x19Created user ID (UUID v4)R\x06userId\"V\n" +
 	"\rLogoutRequest\x12E\n" +
@@ -1267,16 +1300,17 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0fRefreshResponse\x12&\n" +
 	"\x06tokens\x18\x01 \x01(\v2\x0e.proto.JWTPairR\x06tokens\"H\n" +
 	"\x14ValidateTokenRequest\x120\n" +
-	"\x05token\x18\x01 \x01(\tB\x1a\x92A\x172\x15JWT token to validateR\x05token\"\xc6\x01\n" +
+	"\x05token\x18\x01 \x01(\tB\x1a\x92A\x172\x15JWT token to validateR\x05token\"\xe2\x01\n" +
 	"\x15ValidateTokenResponse\x12\x19\n" +
-	"\bis_valid\x18\x01 \x01(\bR\aisValid\x12E\n" +
+	"\bis_valid\x18\x01 \x01(\bR\aisValid\x12a\n" +
 	"\n" +
-	"expires_at\x18\x02 \x01(\x03B&\x92A#2!Token expiration timestamp (Unix)R\texpiresAt\x12K\n" +
-	"\auser_id\x18\x03 \x01(\v2\v.proto.UUIDB%\x92A\"2 User ID from the token (UUID v4)R\x06userId\"\xba\x01\n" +
-	"\x11CreateUserRequest\x12/\n" +
-	"\x05email\x18\x01 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12<\n" +
-	"\bpassword\x18\x02 \x01(\tB \x92A\x1d2\x10Initial password\xa2\x02\bpasswordR\bpassword\x126\n" +
-	"\bis_admin\x18\x03 \x01(\bB\x1b\x92A\x182\x16Grant admin privilegesR\aisAdmin\"M\n" +
+	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB&\x92A#2!Token expiration timestamp (Unix)R\texpiresAt\x12K\n" +
+	"\auser_id\x18\x03 \x01(\v2\v.proto.UUIDB%\x92A\"2 User ID from the token (UUID v4)R\x06userId\"\xe8\x01\n" +
+	"\x11CreateUserRequest\x12,\n" +
+	"\x04name\x18\x01 \x01(\tB\x18\x92A\x152\x13User's display nameR\x04name\x12/\n" +
+	"\x05email\x18\x02 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12<\n" +
+	"\bpassword\x18\x03 \x01(\tB \x92A\x1d2\x10Initial password\xa2\x02\bpasswordR\bpassword\x126\n" +
+	"\bis_admin\x18\x04 \x01(\bB\x1b\x92A\x182\x16Grant admin privilegesR\aisAdmin\"M\n" +
 	"\x0eGetUserRequest\x12;\n" +
 	"\auser_id\x18\x01 \x01(\tB\"\x92A\x1f2\x1dUser ID to retrieve (UUID v4)R\x06userId\"s\n" +
 	"\x10ListUsersRequest\x12'\n" +
@@ -1285,23 +1319,25 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x11ListUsersResponse\x12)\n" +
 	"\x05users\x18\x01 \x03(\v2\x13.proto.UserResponseR\x05users\x12\x14\n" +
 	"\x05total\x18\x02 \x01(\x05R\x05total\x12\x12\n" +
-	"\x04page\x18\x03 \x01(\x05R\x04page\"\xaa\x01\n" +
-	"\x11UpdateUserRequest\x129\n" +
-	"\auser_id\x18\x01 \x01(\tB \x92A\x1d2\x1bUser ID to update (UUID v4)R\x06userId\x12,\n" +
-	"\x05email\x18\x02 \x01(\tB\x16\x92A\x132\x11New email addressR\x05email\x12,\n" +
-	"\bis_admin\x18\x03 \x01(\bB\x11\x92A\x0e2\fAdmin statusR\aisAdmin\"J\n" +
+	"\x04page\x18\x03 \x01(\x05R\x04page\"\xe7\x01\n" +
+	"\x11UpdateUserRequest\x12N\n" +
+	"\auser_id\x18\x01 \x01(\tB5\x92A220User ID to update (UUID v4) - cannot be modifiedR\x06userId\x12&\n" +
+	"\x04name\x18\x02 \x01(\tB\x12\x92A\x0f2\rNew user nameR\x04name\x12,\n" +
+	"\x05email\x18\x03 \x01(\tB\x16\x92A\x132\x11New email addressR\x05email\x12,\n" +
+	"\bis_admin\x18\x04 \x01(\bB\x11\x92A\x0e2\fAdmin statusR\aisAdmin\"J\n" +
 	"\rDeleteRequest\x129\n" +
 	"\auser_id\x18\x01 \x01(\tB \x92A\x1d2\x1bUser ID to delete (UUID v4)R\x06userId\"7\n" +
 	"\x0eDeleteResponse\x12%\n" +
-	"\x06status\x18\x01 \x01(\v2\r.proto.StatusR\x06status\"\x8b\x02\n" +
-	"\fUserResponse\x12C\n" +
-	"\auser_id\x18\x01 \x01(\v2\v.proto.UUIDB\x1d\x92A\x1a2\x18Unique user ID (UUID v4)R\x06userId\x12/\n" +
-	"\x05email\x18\x02 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12,\n" +
-	"\bis_admin\x18\x03 \x01(\bB\x11\x92A\x0e2\fAdmin statusR\aisAdmin\x12W\n" +
+	"\x06status\x18\x01 \x01(\v2\r.proto.StatusR\x06status\"\xbc\x02\n" +
+	"\fUserResponse\x12F\n" +
+	"\auser_id\x18\x01 \x01(\v2\v.proto.UUIDB \x92A\x1d2\x1bImmutable user ID (UUID v4)R\x06userId\x12,\n" +
+	"\x04name\x18\x02 \x01(\tB\x18\x92A\x152\x13User's display nameR\x04name\x12/\n" +
+	"\x05email\x18\x03 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12,\n" +
+	"\bis_admin\x18\x04 \x01(\bB\x11\x92A\x0e2\fAdmin statusR\aisAdmin\x12W\n" +
 	"\n" +
-	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"Y\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"Y\n" +
 	"\x14DeleteAccountRequest\x12A\n" +
-	"\bpassword\x18\x01 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\x87\x18\n" +
+	"\bpassword\x18\x01 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\x8a\x18\n" +
 	"\x04Auth\x12\x9c\x02\n" +
 	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xe7\x01\x92A\xca\x01\n" +
 	"\x0eAuthentication\x12\n" +
@@ -1346,8 +1382,8 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x03200\x12\x16\n" +
 	"\x14New tokens generatedJ\x1e\n" +
 	"\x03401\x12\x17\n" +
-	"\x15Invalid refresh token\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/auth/refresh\x12\xa6\x02\n" +
-	"\rDeleteAccount\x12\x1b.proto.DeleteAccountRequest\x1a\r.proto.Status\"\xe8\x01\x92A\xd0\x01\n" +
+	"\x15Invalid refresh token\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/auth/refresh\x12\xa9\x02\n" +
+	"\rDeleteAccount\x12\x1b.proto.DeleteAccountRequest\x1a\r.proto.Status\"\xeb\x01\x92A\xd0\x01\n" +
 	"\x0fUser Management\x12\x13Delete user account\x1a)Permanently delete current user's accountJ%\n" +
 	"\x03204\x12\x1e\n" +
 	"\x1cAccount deleted successfullyJ\x19\n" +
@@ -1359,7 +1395,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tForbiddenb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x0e*\f/v1/users/me\x12J\n" +
+	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/users/me\x12J\n" +
 	"\rValidateToken\x12\x1b.proto.ValidateTokenRequest\x1a\x1c.proto.ValidateTokenResponse\x12\x91\x02\n" +
 	"\n" +
 	"CreateUser\x12\x18.proto.CreateUserRequest\x1a\x13.proto.UserResponse\"\xd3\x01\x92A\xb5\x01\n" +
@@ -1468,40 +1504,41 @@ var file_proto_auth_proto_depIdxs = []int32{
 	2,  // 2: proto.LogoutResponse.status:type_name -> proto.Status
 	2,  // 3: proto.ChangePasswordResponse.status:type_name -> proto.Status
 	1,  // 4: proto.RefreshResponse.tokens:type_name -> proto.JWTPair
-	0,  // 5: proto.ValidateTokenResponse.user_id:type_name -> proto.UUID
-	22, // 6: proto.ListUsersResponse.users:type_name -> proto.UserResponse
-	2,  // 7: proto.DeleteResponse.status:type_name -> proto.Status
-	0,  // 8: proto.UserResponse.user_id:type_name -> proto.UUID
-	24, // 9: proto.UserResponse.created_at:type_name -> google.protobuf.Timestamp
-	3,  // 10: proto.Auth.Login:input_type -> proto.LoginRequest
-	5,  // 11: proto.Auth.Register:input_type -> proto.RegisterRequest
-	7,  // 12: proto.Auth.Logout:input_type -> proto.LogoutRequest
-	9,  // 13: proto.Auth.ChangePassword:input_type -> proto.ChangePasswordRequest
-	11, // 14: proto.Auth.RefreshToken:input_type -> proto.RefreshRequest
-	23, // 15: proto.Auth.DeleteAccount:input_type -> proto.DeleteAccountRequest
-	13, // 16: proto.Auth.ValidateToken:input_type -> proto.ValidateTokenRequest
-	15, // 17: proto.Auth.CreateUser:input_type -> proto.CreateUserRequest
-	16, // 18: proto.Auth.GetUser:input_type -> proto.GetUserRequest
-	17, // 19: proto.Auth.ListUsers:input_type -> proto.ListUsersRequest
-	19, // 20: proto.Auth.UpdateUser:input_type -> proto.UpdateUserRequest
-	20, // 21: proto.Auth.DeleteUser:input_type -> proto.DeleteRequest
-	4,  // 22: proto.Auth.Login:output_type -> proto.LoginResponse
-	6,  // 23: proto.Auth.Register:output_type -> proto.RegisterResponse
-	8,  // 24: proto.Auth.Logout:output_type -> proto.LogoutResponse
-	10, // 25: proto.Auth.ChangePassword:output_type -> proto.ChangePasswordResponse
-	12, // 26: proto.Auth.RefreshToken:output_type -> proto.RefreshResponse
-	2,  // 27: proto.Auth.DeleteAccount:output_type -> proto.Status
-	14, // 28: proto.Auth.ValidateToken:output_type -> proto.ValidateTokenResponse
-	22, // 29: proto.Auth.CreateUser:output_type -> proto.UserResponse
-	22, // 30: proto.Auth.GetUser:output_type -> proto.UserResponse
-	18, // 31: proto.Auth.ListUsers:output_type -> proto.ListUsersResponse
-	22, // 32: proto.Auth.UpdateUser:output_type -> proto.UserResponse
-	21, // 33: proto.Auth.DeleteUser:output_type -> proto.DeleteResponse
-	22, // [22:34] is the sub-list for method output_type
-	10, // [10:22] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	24, // 5: proto.ValidateTokenResponse.expires_at:type_name -> google.protobuf.Timestamp
+	0,  // 6: proto.ValidateTokenResponse.user_id:type_name -> proto.UUID
+	22, // 7: proto.ListUsersResponse.users:type_name -> proto.UserResponse
+	2,  // 8: proto.DeleteResponse.status:type_name -> proto.Status
+	0,  // 9: proto.UserResponse.user_id:type_name -> proto.UUID
+	24, // 10: proto.UserResponse.created_at:type_name -> google.protobuf.Timestamp
+	3,  // 11: proto.Auth.Login:input_type -> proto.LoginRequest
+	5,  // 12: proto.Auth.Register:input_type -> proto.RegisterRequest
+	7,  // 13: proto.Auth.Logout:input_type -> proto.LogoutRequest
+	9,  // 14: proto.Auth.ChangePassword:input_type -> proto.ChangePasswordRequest
+	11, // 15: proto.Auth.RefreshToken:input_type -> proto.RefreshRequest
+	23, // 16: proto.Auth.DeleteAccount:input_type -> proto.DeleteAccountRequest
+	13, // 17: proto.Auth.ValidateToken:input_type -> proto.ValidateTokenRequest
+	15, // 18: proto.Auth.CreateUser:input_type -> proto.CreateUserRequest
+	16, // 19: proto.Auth.GetUser:input_type -> proto.GetUserRequest
+	17, // 20: proto.Auth.ListUsers:input_type -> proto.ListUsersRequest
+	19, // 21: proto.Auth.UpdateUser:input_type -> proto.UpdateUserRequest
+	20, // 22: proto.Auth.DeleteUser:input_type -> proto.DeleteRequest
+	4,  // 23: proto.Auth.Login:output_type -> proto.LoginResponse
+	6,  // 24: proto.Auth.Register:output_type -> proto.RegisterResponse
+	8,  // 25: proto.Auth.Logout:output_type -> proto.LogoutResponse
+	10, // 26: proto.Auth.ChangePassword:output_type -> proto.ChangePasswordResponse
+	12, // 27: proto.Auth.RefreshToken:output_type -> proto.RefreshResponse
+	2,  // 28: proto.Auth.DeleteAccount:output_type -> proto.Status
+	14, // 29: proto.Auth.ValidateToken:output_type -> proto.ValidateTokenResponse
+	22, // 30: proto.Auth.CreateUser:output_type -> proto.UserResponse
+	22, // 31: proto.Auth.GetUser:output_type -> proto.UserResponse
+	18, // 32: proto.Auth.ListUsers:output_type -> proto.ListUsersResponse
+	22, // 33: proto.Auth.UpdateUser:output_type -> proto.UserResponse
+	21, // 34: proto.Auth.DeleteUser:output_type -> proto.DeleteResponse
+	23, // [23:35] is the sub-list for method output_type
+	11, // [11:23] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_proto_auth_proto_init() }

@@ -204,7 +204,8 @@ service Auth {
 
     rpc DeleteAccount(DeleteAccountRequest) returns (Status) {
         option (google.api.http) = {
-            delete: "/v1/users/me"
+            post: "/v1/users/me"
+            body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "Delete user account";
@@ -473,6 +474,12 @@ message RegisterRequest {
             format: "password",
         }
     ];
+
+    string name = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's display name"
+        }
+    ];
 }
 
 message RegisterResponse {
@@ -540,7 +547,7 @@ message ValidateTokenRequest {
 
 message ValidateTokenResponse {
     bool is_valid = 1;
-    int64 expires_at = 2 [
+    google.protobuf.Timestamp expires_at = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Token expiration timestamp (Unix)",
         }
@@ -554,18 +561,26 @@ message ValidateTokenResponse {
 
 // Admin management messages
 message CreateUserRequest {
-    string email = 1 [
+    string name = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's display name"
+        }
+    ];
+
+    string email = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's email address",
         }
     ];
-    string password = 2 [
+
+    string password = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Initial password",
             format: "password",
         }
     ];
-    bool is_admin = 3 [
+
+    bool is_admin = 4 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Grant admin privileges"
         }
@@ -605,15 +620,23 @@ message ListUsersResponse {
 message UpdateUserRequest {
     string user_id = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "User ID to update (UUID v4)"
+            description: "User ID to update (UUID v4) - cannot be modified"
         }
     ];
-    string email = 2 [
+
+    string name = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New user name"
+        }
+    ];
+
+    string email = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "New email address",
         }
     ];
-    bool is_admin = 3 [
+
+    bool is_admin = 4 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Admin status"
         }
@@ -635,20 +658,29 @@ message DeleteResponse {
 message UserResponse {
     UUID user_id = 1 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "Unique user ID (UUID v4)"
+            description: "Immutable user ID (UUID v4)"
         }
     ];
-    string email = 2 [
+
+    string name = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's display name"
+        }
+    ];
+
+    string email = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's email address",
         }
     ];
-    bool is_admin = 3 [
+
+    bool is_admin = 4 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Admin status"
         }
     ];
-    google.protobuf.Timestamp created_at = 4 [
+
+    google.protobuf.Timestamp created_at = 5 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User creation timestamp"
         }
