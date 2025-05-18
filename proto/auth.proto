@@ -153,6 +153,7 @@ service Auth {
             security: {
                 security_requirement: {
                     key: "bearerAuth";
+                    value: {};
                 }
             }
             responses: {
@@ -204,7 +205,7 @@ service Auth {
 
     rpc DeleteAccount(DeleteAccountRequest) returns (Status) {
         option (google.api.http) = {
-            post: "/v1/users/me"
+            delete: "/v1/users/me"
             body: "*"
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
@@ -214,35 +215,48 @@ service Auth {
             security: {
                 security_requirement: {
                     key: "bearerAuth";
+                    value: {};
                 }
             }
             responses: {
                 key: "204"
-                value: {
-                    description: "Account deleted successfully";
-                }
+                value: { description: "Account deleted successfully"; }
             }
-
-            responses:{
+            responses: {
                 key: "400"
-                value: {
-                    description: "Invalid password";
-                }
+                value: { description: "Invalid password"; }
             }
-
-            responses:{
+            responses: {
                 key: "401"
-                value: {
-                    description: "Unauthorized";
-                }
+                value: { description: "Unauthorized"; }
             }
-            responses:{
+            responses: {
                 key: "403"
-                value: {
-                    description: "Forbidden";
+                value: { description: "Forbidden"; }
+            }
+        };
+    }
+
+    rpc UpdateProfile(UpdateProfileRequest) returns (UserResponse) {
+        option (google.api.http) = {
+            put: "/v1/users/me"
+            body: "*"
+        };
+        option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+            summary: "Update user profile";
+            description: "Updates authenticated user's name and email";
+            tags: "User Management";
+            security: {
+                security_requirement: {
+                    key: "bearerAuth";
                 }
             }
-
+            responses: {
+                key: "200"
+                value: {
+                    description: "Profile updated successfully";
+                }
+            }
         };
     }
 
@@ -462,22 +476,22 @@ message LoginResponse {
 }
 
 message RegisterRequest {
-    string email = 1 [
+    string name = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "User's display name"
+        }
+    ];
+
+    string email = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's email address",
         }
     ];
 
-    string password = 2 [
+    string password = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Desired password",
             format: "password",
-        }
-    ];
-
-    string name = 3 [
-        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-            description: "User's display name"
         }
     ];
 }
@@ -500,6 +514,21 @@ message LogoutRequest {
 
 message LogoutResponse {
     Status status = 1;
+}
+
+
+message UpdateProfileRequest {
+    string name = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New display name"
+        }
+    ];
+
+    string email = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "New email address"
+        }
+    ];
 }
 
 // Password management
@@ -639,6 +668,13 @@ message UpdateUserRequest {
     bool is_admin = 4 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Admin status"
+        }
+    ];
+
+    string password=5 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Password to change",
+            format: "password",
         }
     ];
 }

@@ -25,6 +25,7 @@ const (
 	Auth_ChangePassword_FullMethodName = "/proto.Auth/ChangePassword"
 	Auth_RefreshToken_FullMethodName   = "/proto.Auth/RefreshToken"
 	Auth_DeleteAccount_FullMethodName  = "/proto.Auth/DeleteAccount"
+	Auth_UpdateProfile_FullMethodName  = "/proto.Auth/UpdateProfile"
 	Auth_ValidateToken_FullMethodName  = "/proto.Auth/ValidateToken"
 	Auth_CreateUser_FullMethodName     = "/proto.Auth/CreateUser"
 	Auth_GetUser_FullMethodName        = "/proto.Auth/GetUser"
@@ -45,6 +46,7 @@ type AuthClient interface {
 	ChangePassword(ctx context.Context, in *ChangePasswordRequest, opts ...grpc.CallOption) (*ChangePasswordResponse, error)
 	RefreshToken(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshResponse, error)
 	DeleteAccount(ctx context.Context, in *DeleteAccountRequest, opts ...grpc.CallOption) (*Status, error)
+	UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UserResponse, error)
 	ValidateToken(ctx context.Context, in *ValidateTokenRequest, opts ...grpc.CallOption) (*ValidateTokenResponse, error)
 	// Admin endpoints
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*UserResponse, error)
@@ -116,6 +118,16 @@ func (c *authClient) DeleteAccount(ctx context.Context, in *DeleteAccountRequest
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Status)
 	err := c.cc.Invoke(ctx, Auth_DeleteAccount_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *authClient) UpdateProfile(ctx context.Context, in *UpdateProfileRequest, opts ...grpc.CallOption) (*UserResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UserResponse)
+	err := c.cc.Invoke(ctx, Auth_UpdateProfile_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -194,6 +206,7 @@ type AuthServer interface {
 	ChangePassword(context.Context, *ChangePasswordRequest) (*ChangePasswordResponse, error)
 	RefreshToken(context.Context, *RefreshRequest) (*RefreshResponse, error)
 	DeleteAccount(context.Context, *DeleteAccountRequest) (*Status, error)
+	UpdateProfile(context.Context, *UpdateProfileRequest) (*UserResponse, error)
 	ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error)
 	// Admin endpoints
 	CreateUser(context.Context, *CreateUserRequest) (*UserResponse, error)
@@ -228,6 +241,9 @@ func (UnimplementedAuthServer) RefreshToken(context.Context, *RefreshRequest) (*
 }
 func (UnimplementedAuthServer) DeleteAccount(context.Context, *DeleteAccountRequest) (*Status, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteAccount not implemented")
+}
+func (UnimplementedAuthServer) UpdateProfile(context.Context, *UpdateProfileRequest) (*UserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProfile not implemented")
 }
 func (UnimplementedAuthServer) ValidateToken(context.Context, *ValidateTokenRequest) (*ValidateTokenResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ValidateToken not implemented")
@@ -376,6 +392,24 @@ func _Auth_DeleteAccount_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Auth_UpdateProfile_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProfileRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AuthServer).UpdateProfile(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Auth_UpdateProfile_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AuthServer).UpdateProfile(ctx, req.(*UpdateProfileRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Auth_ValidateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ValidateTokenRequest)
 	if err := dec(in); err != nil {
@@ -514,6 +548,10 @@ var Auth_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteAccount",
 			Handler:    _Auth_DeleteAccount_Handler,
+		},
+		{
+			MethodName: "UpdateProfile",
+			Handler:    _Auth_UpdateProfile_Handler,
 		},
 		{
 			MethodName: "ValidateToken",
