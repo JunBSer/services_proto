@@ -207,17 +207,20 @@ service Auth {
         option (google.api.http) = {
             delete: "/v1/users/me"
             body: "*"
+
         };
         option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
             summary: "Delete user account";
             description: "Permanently delete current user's account";
             tags: "User Management";
+
             security: {
                 security_requirement: {
                     key: "bearerAuth";
                     value: {};
                 }
             }
+
             responses: {
                 key: "204"
                 value: { description: "Account deleted successfully"; }
@@ -518,13 +521,18 @@ message LogoutResponse {
 
 
 message UpdateProfileRequest {
-    string name = 1 [
+    string access_token =1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "JWT token to update",
+        }
+    ];
+    string name = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "New display name"
         }
     ];
 
-    string email = 2 [
+    string email = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "New email address"
         }
@@ -533,14 +541,20 @@ message UpdateProfileRequest {
 
 // Password management
 message ChangePasswordRequest {
-    string old_password = 1 [
+    string access_token =1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "JWT token to change password",
+        }
+    ];
+
+    string old_password = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Current password",
             format: "password",
         }
     ];
 
-    string new_password = 2 [
+    string new_password = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "New password",
             format: "password",
@@ -724,7 +738,12 @@ message UserResponse {
 }
 
 message DeleteAccountRequest {
-    string password = 1 [
+    string access_token =1[
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "JWT token to delete",
+        }
+    ];
+    string password = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User's password for confirmation",
         }

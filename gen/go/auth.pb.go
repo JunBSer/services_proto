@@ -472,8 +472,9 @@ func (x *LogoutResponse) GetStatus() *Status {
 
 type UpdateProfileRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Email         string                 `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -508,6 +509,13 @@ func (*UpdateProfileRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{9}
 }
 
+func (x *UpdateProfileRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
+}
+
 func (x *UpdateProfileRequest) GetName() string {
 	if x != nil {
 		return x.Name
@@ -525,8 +533,9 @@ func (x *UpdateProfileRequest) GetEmail() string {
 // Password management
 type ChangePasswordRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OldPassword   string                 `protobuf:"bytes,1,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"`
-	NewPassword   string                 `protobuf:"bytes,2,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	OldPassword   string                 `protobuf:"bytes,2,opt,name=old_password,json=oldPassword,proto3" json:"old_password,omitempty"`
+	NewPassword   string                 `protobuf:"bytes,3,opt,name=new_password,json=newPassword,proto3" json:"new_password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -559,6 +568,13 @@ func (x *ChangePasswordRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ChangePasswordRequest.ProtoReflect.Descriptor instead.
 func (*ChangePasswordRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ChangePasswordRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
 }
 
 func (x *ChangePasswordRequest) GetOldPassword() string {
@@ -1279,7 +1295,8 @@ func (x *UserResponse) GetCreatedAt() *timestamppb.Timestamp {
 
 type DeleteAccountRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Password      string                 `protobuf:"bytes,1,opt,name=password,proto3" json:"password,omitempty"`
+	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1312,6 +1329,13 @@ func (x *DeleteAccountRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use DeleteAccountRequest.ProtoReflect.Descriptor instead.
 func (*DeleteAccountRequest) Descriptor() ([]byte, []int) {
 	return file_proto_auth_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *DeleteAccountRequest) GetAccessToken() string {
+	if x != nil {
+		return x.AccessToken
+	}
+	return ""
 }
 
 func (x *DeleteAccountRequest) GetPassword() string {
@@ -1349,13 +1373,15 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\rLogoutRequest\x12E\n" +
 	"\rrefresh_token\x18\x01 \x01(\tB \x92A\x1d2\x1bRefresh token to invalidateR\frefreshToken\"7\n" +
 	"\x0eLogoutResponse\x12%\n" +
-	"\x06status\x18\x01 \x01(\v2\r.proto.StatusR\x06status\"o\n" +
-	"\x14UpdateProfileRequest\x12)\n" +
-	"\x04name\x18\x01 \x01(\tB\x15\x92A\x122\x10New display nameR\x04name\x12,\n" +
-	"\x05email\x18\x02 \x01(\tB\x16\x92A\x132\x11New email addressR\x05email\"\x9d\x01\n" +
-	"\x15ChangePasswordRequest\x12C\n" +
-	"\fold_password\x18\x01 \x01(\tB \x92A\x1d2\x10Current password\xa2\x02\bpasswordR\voldPassword\x12?\n" +
-	"\fnew_password\x18\x02 \x01(\tB\x1c\x92A\x192\fNew password\xa2\x02\bpasswordR\vnewPassword\"?\n" +
+	"\x06status\x18\x01 \x01(\v2\r.proto.StatusR\x06status\"\xac\x01\n" +
+	"\x14UpdateProfileRequest\x12;\n" +
+	"\faccess_token\x18\x01 \x01(\tB\x18\x92A\x152\x13JWT token to updateR\vaccessToken\x12)\n" +
+	"\x04name\x18\x02 \x01(\tB\x15\x92A\x122\x10New display nameR\x04name\x12,\n" +
+	"\x05email\x18\x03 \x01(\tB\x16\x92A\x132\x11New email addressR\x05email\"\xe3\x01\n" +
+	"\x15ChangePasswordRequest\x12D\n" +
+	"\faccess_token\x18\x01 \x01(\tB!\x92A\x1e2\x1cJWT token to change passwordR\vaccessToken\x12C\n" +
+	"\fold_password\x18\x02 \x01(\tB \x92A\x1d2\x10Current password\xa2\x02\bpasswordR\voldPassword\x12?\n" +
+	"\fnew_password\x18\x03 \x01(\tB\x1c\x92A\x192\fNew password\xa2\x02\bpasswordR\vnewPassword\"?\n" +
 	"\x16ChangePasswordResponse\x12%\n" +
 	"\x06status\x18\x01 \x01(\v2\r.proto.StatusR\x06status\"O\n" +
 	"\x0eRefreshRequest\x12=\n" +
@@ -1399,9 +1425,10 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x05email\x18\x03 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12,\n" +
 	"\bis_admin\x18\x04 \x01(\bB\x11\x92A\x0e2\fAdmin statusR\aisAdmin\x12W\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"Y\n" +
-	"\x14DeleteAccountRequest\x12A\n" +
-	"\bpassword\x18\x01 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\xf8\x19\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"\x96\x01\n" +
+	"\x14DeleteAccountRequest\x12;\n" +
+	"\faccess_token\x18\x01 \x01(\tB\x18\x92A\x152\x13JWT token to deleteR\vaccessToken\x12A\n" +
+	"\bpassword\x18\x02 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\xf8\x19\n" +
 	"\x04Auth\x12\x9c\x02\n" +
 	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xe7\x01\x92A\xca\x01\n" +
 	"\x0eAuthentication\x12\n" +
