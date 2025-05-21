@@ -773,6 +773,7 @@ type ValidateTokenResponse struct {
 	IsValid       bool                   `protobuf:"varint,1,opt,name=is_valid,json=isValid,proto3" json:"is_valid,omitempty"`
 	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
 	UserId        *UUID                  `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	IsAdmin       bool                   `protobuf:"varint,4,opt,name=is_admin,json=isAdmin,proto3" json:"is_admin,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -826,6 +827,13 @@ func (x *ValidateTokenResponse) GetUserId() *UUID {
 		return x.UserId
 	}
 	return nil
+}
+
+func (x *ValidateTokenResponse) GetIsAdmin() bool {
+	if x != nil {
+		return x.IsAdmin
+	}
+	return false
 }
 
 // Admin management messages
@@ -1389,12 +1397,13 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0fRefreshResponse\x12&\n" +
 	"\x06tokens\x18\x01 \x01(\v2\x0e.proto.JWTPairR\x06tokens\"H\n" +
 	"\x14ValidateTokenRequest\x120\n" +
-	"\x05token\x18\x01 \x01(\tB\x1a\x92A\x172\x15JWT token to validateR\x05token\"\xe2\x01\n" +
+	"\x05token\x18\x01 \x01(\tB\x1a\x92A\x172\x15JWT token to validateR\x05token\"\x9c\x02\n" +
 	"\x15ValidateTokenResponse\x12\x19\n" +
 	"\bis_valid\x18\x01 \x01(\bR\aisValid\x12a\n" +
 	"\n" +
 	"expires_at\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampB&\x92A#2!Token expiration timestamp (Unix)R\texpiresAt\x12K\n" +
-	"\auser_id\x18\x03 \x01(\v2\v.proto.UUIDB%\x92A\"2 User ID from the token (UUID v4)R\x06userId\"\xe8\x01\n" +
+	"\auser_id\x18\x03 \x01(\v2\v.proto.UUIDB%\x92A\"2 User ID from the token (UUID v4)R\x06userId\x128\n" +
+	"\bis_admin\x18\x04 \x01(\bB\x1d\x92A\x1a2\x18Represents is user adminR\aisAdmin\"\xe8\x01\n" +
 	"\x11CreateUserRequest\x12,\n" +
 	"\x04name\x18\x01 \x01(\tB\x18\x92A\x152\x13User's display nameR\x04name\x12/\n" +
 	"\x05email\x18\x02 \x01(\tB\x19\x92A\x162\x14User's email addressR\x05email\x12<\n" +

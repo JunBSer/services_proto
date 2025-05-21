@@ -590,14 +590,21 @@ message ValidateTokenRequest {
 
 message ValidateTokenResponse {
     bool is_valid = 1;
+
     google.protobuf.Timestamp expires_at = 2 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "Token expiration timestamp (Unix)",
         }
     ];
+
     UUID user_id = 3 [
         (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
             description: "User ID from the token (UUID v4)"
+        }
+    ];
+    bool is_admin = 4 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+            description: "Represents is user admin"
         }
     ];
 }
