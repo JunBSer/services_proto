@@ -1437,14 +1437,13 @@ const file_proto_auth_proto_rawDesc = "" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"\x96\x01\n" +
 	"\x14DeleteAccountRequest\x12;\n" +
 	"\faccess_token\x18\x01 \x01(\tB\x18\x92A\x152\x13JWT token to deleteR\vaccessToken\x12A\n" +
-	"\bpassword\x18\x02 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\xf8\x19\n" +
-	"\x04Auth\x12\x9c\x02\n" +
-	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xe7\x01\x92A\xca\x01\n" +
+	"\bpassword\x18\x02 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\xd1\x19\n" +
+	"\x04Auth\x12\xf5\x01\n" +
+	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xc0\x01\x92A\xa3\x01\n" +
 	"\x0eAuthentication\x12\n" +
-	"User login\x1a)Authenticates user and returns JWT tokensJL\n" +
-	"\x03200\x12E\n" +
-	"\x1cSuccess response with tokens\x12%\n" +
-	"#\x1a!#/definitions/proto.LoginResponseJ\x1c\n" +
+	"User login\x1a)Authenticates user and returns JWT tokensJ%\n" +
+	"\x03200\x12\x1e\n" +
+	"\x1cSuccess response with tokensJ\x1c\n" +
 	"\x03400\x12\x15\n" +
 	"\x13Invalid credentialsJ\x15\n" +
 	"\x03401\x12\x0e\n" +
@@ -1557,13 +1556,13 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0eUser not foundb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1b*\x19/v1/admin/users/{user_id}B\xb8\x02\x92A\x83\x02\x12\x89\x01\n" +
+	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1b*\x19/v1/admin/users/{user_id}B\xbd\x02\x92A\x83\x02\x12\x89\x01\n" +
 	"\x10Auth Service API\"D\n" +
 	"\aJunBSer\x12\x1ahttps://github.com/JunBSer\x1a\x1daleksei.radzetskiiw@gmail.com**\n" +
 	"\x03MIT\x12#https://opensource.org/licenses/MIT2\x032.0\x1a\x0elocalhost:8080*\x01\x012\x10application/json:\x10application/jsonZ>\n" +
 	"<\n" +
 	"\n" +
-	"bearerAuth\x12.\x12,JWT Authentication. Format: 'Bearer {token}'Z/github.com/JunBSer/services_proto/gen/go;authpbb\x06proto3"
+	"bearerAuth\x12.\x12,JWT Authentication. Format: 'Bearer {token}'Z4github.com/JunBSer/services_proto/auth/gen/go;authpbb\x06proto3"
 
 var (
 	file_proto_auth_proto_rawDescOnce sync.Once

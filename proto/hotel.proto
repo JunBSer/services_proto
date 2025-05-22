@@ -6,7 +6,7 @@ import "google/api/annotations.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/JunBSer/services_proto/gen/go;hotelpb";
+option go_package = "github.com/JunBSer/services_proto/hotel/gen/go;hotelpb";
 
 option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
   info: {

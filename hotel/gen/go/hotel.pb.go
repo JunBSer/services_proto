@@ -957,12 +957,12 @@ const file_proto_hotel_proto_rawDesc = "" +
 	"\x0e\n" +
 	"\n" +
 	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\"* /v1/hotels/{hotel_id}/rooms/{id}\x12\xcf\x01\n" +
-	"\x11CheckAvailability\x12\x1a.hotel.AvailabilityRequest\x1a\x1b.hotel.AvailabilityResponse\"\x80\x01\x92AS\x12\x17Check room availability\x1a%Check available rooms for given dates*\x11CheckAvailability\x82\xd3\xe4\x93\x02$\x12\"/v1/hotels/{hotel_id}/availabilityB\x87\x02\x92A\xd1\x01\x12\x84\x01\n" +
+	"\x11CheckAvailability\x12\x1a.hotel.AvailabilityRequest\x1a\x1b.hotel.AvailabilityResponse\"\x80\x01\x92AS\x12\x17Check room availability\x1a%Check available rooms for given dates*\x11CheckAvailability\x82\xd3\xe4\x93\x02$\x12\"/v1/hotels/{hotel_id}/availabilityB\x8d\x02\x92A\xd1\x01\x12\x84\x01\n" +
 	"\rHotel Service\x12 Hotel and room management system\"L\n" +
 	"\fSupport Team\x12!https://hotel-service.com/support\x1a\x19support@hotel-service.com2\x031.0ZH\n" +
 	"F\n" +
 	"\n" +
-	"bearerAuth\x128\b\x02\x12#JWT token in format: Bearer <token>\x1a\rAuthorization \x02Z0github.com/JunBSer/services_proto/gen/go;hotelpbb\x06proto3"
+	"bearerAuth\x128\b\x02\x12#JWT token in format: Bearer <token>\x1a\rAuthorization \x02Z6github.com/JunBSer/services_proto/hotel/gen/go;hotelpbb\x06proto3"
 
 var (
 	file_proto_hotel_proto_rawDescOnce sync.Once
