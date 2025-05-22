@@ -1,0 +1,349 @@
+syntax = "proto3";
+
+package hotel;
+
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/JunBSer/services_proto/gen/go;hotelpb";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Hotel Service";
+    version: "1.0";
+    description: "Hotel and room management system";
+    contact: {
+      name: "Support Team";
+      url: "https://hotel-service.com/support";
+      email: "support@hotel-service.com";
+    };
+  };
+  security_definitions: {
+    security: {
+      key: "bearerAuth";
+      value: {
+        type: TYPE_API_KEY;
+        in: IN_HEADER;
+        name: "Authorization";
+        description: "JWT token in format: Bearer <token>";
+      };
+    };
+  };
+};
+
+service HotelService {
+  rpc CreateHotel(CreateHotelRequest) returns (Hotel) {
+    option (google.api.http) = {
+      post: "/v1/hotels"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create new hotel";
+      description: "Requires admin privileges";
+      operation_id: "CreateHotel";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc UpdateHotel(UpdateHotelRequest) returns (Hotel) {
+    option (google.api.http) = {
+      put: "/v1/hotels/{id}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update hotel information";
+      description: "Requires admin privileges";
+      operation_id: "UpdateHotel";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc DeleteHotel(DeleteHotelRequest) returns (DeleteResponse) {
+    option (google.api.http) = {
+      delete: "/v1/hotels/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete hotel";
+      description: "Requires admin privileges";
+      operation_id: "DeleteHotel";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc GetHotel(GetHotelRequest) returns (Hotel) {
+    option (google.api.http) = {
+      get: "/v1/hotels/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get hotel details";
+      operation_id: "GetHotel";
+    };
+  }
+
+  rpc SearchHotels(SearchRequest) returns (HotelList) {
+    option (google.api.http) = {
+      get: "/v1/hotels/search"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Search hotels";
+      description: "Filter hotels by location and amenities";
+      operation_id: "SearchHotels";
+    };
+  }
+
+  rpc AddRoom(AddRoomRequest) returns (Room) {
+    option (google.api.http) = {
+      post: "/v1/hotels/{hotel_id}/rooms"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Add new room";
+      description: "Requires admin privileges";
+      operation_id: "AddRoom";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc UpdateRoom(UpdateRoomRequest) returns (Room) {
+    option (google.api.http) = {
+      put: "/v1/hotels/{hotel_id}/rooms/{id}"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Update room information";
+      description: "Requires admin privileges";
+      operation_id: "UpdateRoom";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc DeleteRoom(DeleteRoomRequest) returns (DeleteResponse) {
+    option (google.api.http) = {
+      delete: "/v1/hotels/{hotel_id}/rooms/{id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Delete room";
+      description: "Requires admin privileges";
+      operation_id: "DeleteRoom";
+      security: { security_requirement: { key: "bearerAuth" } };
+    };
+  }
+
+  rpc CheckAvailability(AvailabilityRequest) returns (AvailabilityResponse) {
+    option (google.api.http) = {
+      get: "/v1/hotels/{hotel_id}/availability"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Check room availability";
+      description: "Check available rooms for given dates";
+      operation_id: "CheckAvailability";
+    };
+  }
+}
+
+message Hotel {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Hotel";
+      description: "Hotel entity with rooms and amenities";
+    };
+  };
+
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Unique hotel identifier";
+  }];
+
+  string name = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel name";
+  }];
+
+  string address = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Full physical address";
+  }];
+
+  repeated string amenities = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "List of hotel amenities";
+  }];
+
+  repeated Room rooms = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "List of available rooms";
+  }];
+
+  map<string, string> metadata = 15 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Additional hotel metadata";
+  }];
+}
+
+message Room {
+  option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_schema) = {
+    json_schema: {
+      title: "Room";
+      description: "Hotel room information";
+    };
+  };
+
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Unique room identifier";
+  }];
+
+  string type = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room type/category";
+  }];
+
+  repeated string amenities = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room-specific amenities";
+  }];
+
+  bool is_available = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Current availability status";
+  }];
+
+  double price_per_night = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Price per night";
+  }];
+}
+
+message CreateHotelRequest {
+  string name = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel name";
+  }];
+
+  string address = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Full physical address";
+  }];
+
+  repeated string amenities = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Initial list of amenities";
+  }];
+}
+
+message UpdateHotelRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel ID to update";
+  }];
+
+  string name = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated hotel name";
+  }];
+
+  string address = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated physical address";
+  }];
+
+  repeated string amenities = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated list of amenities";
+  }];
+}
+
+message DeleteHotelRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel ID to delete";
+  }];
+}
+
+message DeleteResponse {
+  bool success = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Operation success status";
+  }];
+}
+
+message GetHotelRequest {
+  string id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel ID to retrieve";
+  }];
+}
+
+message SearchRequest {
+  string location = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Location search query";
+  }];
+
+  repeated string required_amenities = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Required amenities filter";
+  }];
+}
+
+message HotelList {
+  repeated Hotel hotels = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "List of matching hotels";
+  }];
+}
+
+message AddRoomRequest {
+  string hotel_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Parent hotel ID";
+  }];
+
+  string type = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room type/category";
+  }];
+
+  repeated string amenities = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room amenities";
+  }];
+
+  double price_per_night = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Price per night";
+  }];
+}
+
+message UpdateRoomRequest {
+  string hotel_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Parent hotel ID";
+  }];
+
+  string id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room ID to update";
+  }];
+
+  string type = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated room type";
+  }];
+
+  repeated string amenities = 4 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated amenities list";
+  }];
+
+  double price_per_night = 5 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Updated price per night";
+  }];
+}
+
+message DeleteRoomRequest {
+  string hotel_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Parent hotel ID";
+  }];
+
+  string id = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Room ID to delete";
+  }];
+}
+
+message AvailabilityRequest {
+  string hotel_id = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Hotel ID to check availability";
+  }];
+
+  google.protobuf.Timestamp start_date = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Start date of stay (ISO 8601)";
+  }];
+
+  google.protobuf.Timestamp end_date = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "End date of stay (ISO 8601)";
+  }];
+}
+
+message AvailabilityResponse {
+  bool is_available = 1 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Overall availability status";
+  }];
+
+  repeated Room available_rooms = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "List of available rooms";
+  }];
+
+  double total_price = 3 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+    description: "Total price for selected period";
+  }];
+}
