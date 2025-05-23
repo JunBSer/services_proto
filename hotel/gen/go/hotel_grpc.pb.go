@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,6 +25,9 @@ const (
 	HotelService_DeleteHotel_FullMethodName       = "/hotel.HotelService/DeleteHotel"
 	HotelService_GetHotel_FullMethodName          = "/hotel.HotelService/GetHotel"
 	HotelService_SearchHotels_FullMethodName      = "/hotel.HotelService/SearchHotels"
+	HotelService_ListHotels_FullMethodName        = "/hotel.HotelService/ListHotels"
+	HotelService_ListRooms_FullMethodName         = "/hotel.HotelService/ListRooms"
+	HotelService_GetRoom_FullMethodName           = "/hotel.HotelService/GetRoom"
 	HotelService_AddRoom_FullMethodName           = "/hotel.HotelService/AddRoom"
 	HotelService_UpdateRoom_FullMethodName        = "/hotel.HotelService/UpdateRoom"
 	HotelService_DeleteRoom_FullMethodName        = "/hotel.HotelService/DeleteRoom"
@@ -39,6 +43,9 @@ type HotelServiceClient interface {
 	DeleteHotel(ctx context.Context, in *DeleteHotelRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
 	GetHotel(ctx context.Context, in *GetHotelRequest, opts ...grpc.CallOption) (*Hotel, error)
 	SearchHotels(ctx context.Context, in *SearchRequest, opts ...grpc.CallOption) (*HotelList, error)
+	ListHotels(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HotelList, error)
+	ListRooms(ctx context.Context, in *ListRoomsRequest, opts ...grpc.CallOption) (*RoomList, error)
+	GetRoom(ctx context.Context, in *GetRoomRequest, opts ...grpc.CallOption) (*Room, error)
 	AddRoom(ctx context.Context, in *AddRoomRequest, opts ...grpc.CallOption) (*Room, error)
 	UpdateRoom(ctx context.Context, in *UpdateRoomRequest, opts ...grpc.CallOption) (*Room, error)
 	DeleteRoom(ctx context.Context, in *DeleteRoomRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
@@ -103,6 +110,36 @@ func (c *hotelServiceClient) SearchHotels(ctx context.Context, in *SearchRequest
 	return out, nil
 }
 
+func (c *hotelServiceClient) ListHotels(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HotelList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(HotelList)
+	err := c.cc.Invoke(ctx, HotelService_ListHotels_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotelServiceClient) ListRooms(ctx context.Context, in *ListRoomsRequest, opts ...grpc.CallOption) (*RoomList, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RoomList)
+	err := c.cc.Invoke(ctx, HotelService_ListRooms_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *hotelServiceClient) GetRoom(ctx context.Context, in *GetRoomRequest, opts ...grpc.CallOption) (*Room, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Room)
+	err := c.cc.Invoke(ctx, HotelService_GetRoom_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *hotelServiceClient) AddRoom(ctx context.Context, in *AddRoomRequest, opts ...grpc.CallOption) (*Room, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Room)
@@ -152,6 +189,9 @@ type HotelServiceServer interface {
 	DeleteHotel(context.Context, *DeleteHotelRequest) (*DeleteResponse, error)
 	GetHotel(context.Context, *GetHotelRequest) (*Hotel, error)
 	SearchHotels(context.Context, *SearchRequest) (*HotelList, error)
+	ListHotels(context.Context, *emptypb.Empty) (*HotelList, error)
+	ListRooms(context.Context, *ListRoomsRequest) (*RoomList, error)
+	GetRoom(context.Context, *GetRoomRequest) (*Room, error)
 	AddRoom(context.Context, *AddRoomRequest) (*Room, error)
 	UpdateRoom(context.Context, *UpdateRoomRequest) (*Room, error)
 	DeleteRoom(context.Context, *DeleteRoomRequest) (*DeleteResponse, error)
@@ -180,6 +220,15 @@ func (UnimplementedHotelServiceServer) GetHotel(context.Context, *GetHotelReques
 }
 func (UnimplementedHotelServiceServer) SearchHotels(context.Context, *SearchRequest) (*HotelList, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SearchHotels not implemented")
+}
+func (UnimplementedHotelServiceServer) ListHotels(context.Context, *emptypb.Empty) (*HotelList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListHotels not implemented")
+}
+func (UnimplementedHotelServiceServer) ListRooms(context.Context, *ListRoomsRequest) (*RoomList, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListRooms not implemented")
+}
+func (UnimplementedHotelServiceServer) GetRoom(context.Context, *GetRoomRequest) (*Room, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRoom not implemented")
 }
 func (UnimplementedHotelServiceServer) AddRoom(context.Context, *AddRoomRequest) (*Room, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddRoom not implemented")
@@ -304,6 +353,60 @@ func _HotelService_SearchHotels_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HotelService_ListHotels_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotelServiceServer).ListHotels(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotelService_ListHotels_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotelServiceServer).ListHotels(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotelService_ListRooms_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListRoomsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotelServiceServer).ListRooms(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotelService_ListRooms_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotelServiceServer).ListRooms(ctx, req.(*ListRoomsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _HotelService_GetRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRoomRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HotelServiceServer).GetRoom(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HotelService_GetRoom_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HotelServiceServer).GetRoom(ctx, req.(*GetRoomRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _HotelService_AddRoom_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddRoomRequest)
 	if err := dec(in); err != nil {
@@ -402,6 +505,18 @@ var HotelService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SearchHotels",
 			Handler:    _HotelService_SearchHotels_Handler,
+		},
+		{
+			MethodName: "ListHotels",
+			Handler:    _HotelService_ListHotels_Handler,
+		},
+		{
+			MethodName: "ListRooms",
+			Handler:    _HotelService_ListRooms_Handler,
+		},
+		{
+			MethodName: "GetRoom",
+			Handler:    _HotelService_GetRoom_Handler,
 		},
 		{
 			MethodName: "AddRoom",

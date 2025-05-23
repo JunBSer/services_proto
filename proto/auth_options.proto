@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package auth_options;
+
+option go_package = "github.com/JunBSer/options/auth_options/gen/go;options";
+
+enum AuthLevel {
+  NONE = 0;
+  USER = 1;
+  ADMIN = 2;
+}
+
+extend google.protobuf.MethodOptions {
+  AuthLevel auth_level = 50002;
+}

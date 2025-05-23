@@ -7,10 +7,12 @@
 package hotelpb
 
 import (
+	_ "github.com/JunBSer/options/auth_options/gen/go"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -856,11 +858,151 @@ func (x *AvailabilityResponse) GetTotalPrice() float64 {
 	return 0
 }
 
+type GetRoomRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	HotelId       string                 `protobuf:"bytes,1,opt,name=hotel_id,json=hotelId,proto3" json:"hotel_id,omitempty"`
+	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetRoomRequest) Reset() {
+	*x = GetRoomRequest{}
+	mi := &file_proto_hotel_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRoomRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRoomRequest) ProtoMessage() {}
+
+func (x *GetRoomRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_hotel_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRoomRequest.ProtoReflect.Descriptor instead.
+func (*GetRoomRequest) Descriptor() ([]byte, []int) {
+	return file_proto_hotel_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetRoomRequest) GetHotelId() string {
+	if x != nil {
+		return x.HotelId
+	}
+	return ""
+}
+
+func (x *GetRoomRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type ListRoomsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	HotelId       string                 `protobuf:"bytes,1,opt,name=hotel_id,json=hotelId,proto3" json:"hotel_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListRoomsRequest) Reset() {
+	*x = ListRoomsRequest{}
+	mi := &file_proto_hotel_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListRoomsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListRoomsRequest) ProtoMessage() {}
+
+func (x *ListRoomsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_hotel_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListRoomsRequest.ProtoReflect.Descriptor instead.
+func (*ListRoomsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_hotel_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListRoomsRequest) GetHotelId() string {
+	if x != nil {
+		return x.HotelId
+	}
+	return ""
+}
+
+type RoomList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Rooms         []*Room                `protobuf:"bytes,1,rep,name=rooms,proto3" json:"rooms,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RoomList) Reset() {
+	*x = RoomList{}
+	mi := &file_proto_hotel_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RoomList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RoomList) ProtoMessage() {}
+
+func (x *RoomList) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_hotel_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RoomList.ProtoReflect.Descriptor instead.
+func (*RoomList) Descriptor() ([]byte, []int) {
+	return file_proto_hotel_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *RoomList) GetRooms() []*Room {
+	if x != nil {
+		return x.Rooms
+	}
+	return nil
+}
+
 var File_proto_hotel_proto protoreflect.FileDescriptor
 
 const file_proto_hotel_proto_rawDesc = "" +
 	"\n" +
-	"\x11proto/hotel.proto\x12\x05hotel\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd7\x03\n" +
+	"\x11proto/hotel.proto\x12\x05hotel\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x12auth_options.proto\"\xd7\x03\n" +
 	"\x05Hotel\x12,\n" +
 	"\x02id\x18\x01 \x01(\tB\x1c\x92A\x192\x17Unique hotel identifierR\x02id\x12#\n" +
 	"\x04name\x18\x02 \x01(\tB\x0f\x92A\f2\n" +
@@ -924,40 +1066,54 @@ const file_proto_hotel_proto_rawDesc = "" +
 	"\fis_available\x18\x01 \x01(\bB \x92A\x1d2\x1bOverall availability statusR\visAvailable\x12R\n" +
 	"\x0favailable_rooms\x18\x02 \x03(\v2\v.hotel.RoomB\x1c\x92A\x192\x17List of available roomsR\x0eavailableRooms\x12E\n" +
 	"\vtotal_price\x18\x03 \x01(\x01B$\x92A!2\x1fTotal price for selected periodR\n" +
-	"totalPrice2\xe4\v\n" +
-	"\fHotelService\x12\x9c\x01\n" +
-	"\vCreateHotel\x12\x19.hotel.CreateHotelRequest\x1a\f.hotel.Hotel\"d\x92AL\x12\x10Create new hotel\x1a\x19Requires admin privileges*\vCreateHotelb\x10\n" +
+	"totalPrice\"~\n" +
+	"\x0eGetRoomRequest\x12B\n" +
+	"\bhotel_id\x18\x01 \x01(\tB'\x92A$2\"Hotel ID to which the room belongsR\ahotelId\x12(\n" +
+	"\x02id\x18\x02 \x01(\tB\x18\x92A\x152\x13Room ID to retrieveR\x02id\"X\n" +
+	"\x10ListRoomsRequest\x12D\n" +
+	"\bhotel_id\x18\x01 \x01(\tB)\x92A&2$Hotel ID for which to list all roomsR\ahotelId\"-\n" +
+	"\bRoomList\x12!\n" +
+	"\x05rooms\x18\x01 \x03(\v2\v.hotel.RoomR\x05rooms2\xe6\x0f\n" +
+	"\fHotelService\x12\xa0\x01\n" +
+	"\vCreateHotel\x12\x19.hotel.CreateHotelRequest\x1a\f.hotel.Hotel\"h\x92AL\x12\x10Create new hotel\x1a\x19Requires admin privileges*\vCreateHotelb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
-	"/v1/hotels\x12\xa9\x01\n" +
-	"\vUpdateHotel\x12\x19.hotel.UpdateHotelRequest\x1a\f.hotel.Hotel\"q\x92AT\x12\x18Update hotel information\x1a\x19Requires admin privileges*\vUpdateHotelb\x10\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
+	"/v1/hotels\x12\xad\x01\n" +
+	"\vUpdateHotel\x12\x19.hotel.UpdateHotelRequest\x1a\f.hotel.Hotel\"u\x92AT\x12\x18Update hotel information\x1a\x19Requires admin privileges*\vUpdateHotelb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/v1/hotels/{id}\x12\xa3\x01\n" +
-	"\vDeleteHotel\x12\x19.hotel.DeleteHotelRequest\x1a\x15.hotel.DeleteResponse\"b\x92AH\x12\fDelete hotel\x1a\x19Requires admin privileges*\vDeleteHotelb\x10\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x14:\x01*\x1a\x0f/v1/hotels/{id}\x12\xa7\x01\n" +
+	"\vDeleteHotel\x12\x19.hotel.DeleteHotelRequest\x1a\x15.hotel.DeleteResponse\"f\x92AH\x12\fDelete hotel\x1a\x19Requires admin privileges*\vDeleteHotelb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11*\x0f/v1/hotels/{id}\x12i\n" +
-	"\bGetHotel\x12\x16.hotel.GetHotelRequest\x1a\f.hotel.Hotel\"7\x92A\x1d\x12\x11Get hotel details*\bGetHotel\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/hotels/{id}\x12\x9a\x01\n" +
-	"\fSearchHotels\x12\x14.hotel.SearchRequest\x1a\x10.hotel.HotelList\"b\x92AF\x12\rSearch hotels\x1a'Filter hotels by location and amenities*\fSearchHotels\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/hotels/search\x12\x9c\x01\n" +
-	"\aAddRoom\x12\x15.hotel.AddRoomRequest\x1a\v.hotel.Room\"m\x92AD\x12\fAdd new room\x1a\x19Requires admin privileges*\aAddRoomb\x10\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x11*\x0f/v1/hotels/{id}\x12m\n" +
+	"\bGetHotel\x12\x16.hotel.GetHotelRequest\x1a\f.hotel.Hotel\";\x92A\x1d\x12\x11Get hotel details*\bGetHotel\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/hotels/{id}\x12\x9e\x01\n" +
+	"\fSearchHotels\x12\x14.hotel.SearchRequest\x1a\x10.hotel.HotelList\"f\x92AF\x12\rSearch hotels\x1a'Filter hotels by location and amenities*\fSearchHotels\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/hotels/search\x12\x90\x01\n" +
+	"\n" +
+	"ListHotels\x12\x16.google.protobuf.Empty\x1a\x10.hotel.HotelList\"X\x92A?\x12\x0fList all hotels\x1a Returns all hotels in the system*\n" +
+	"ListHotels\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\f\x12\n" +
+	"/v1/hotels\x12\x9d\x01\n" +
+	"\tListRooms\x12\x17.hotel.ListRoomsRequest\x1a\x0f.hotel.RoomList\"f\x92A<\x12\n" +
+	"List rooms\x1a#List all rooms in a specified hotel*\tListRooms\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/hotels/{hotel_id}/rooms\x12\xa8\x01\n" +
+	"\aGetRoom\x12\x15.hotel.GetRoomRequest\x1a\v.hotel.Room\"y\x92AJ\x12\x10Get room details\x1a-Retrieve a specific room by hotel and room ID*\aGetRoom\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\"\x12 /v1/hotels/{hotel_id}/rooms/{id}\x12\xa0\x01\n" +
+	"\aAddRoom\x12\x15.hotel.AddRoomRequest\x1a\v.hotel.Room\"q\x92AD\x12\fAdd new room\x1a\x19Requires admin privileges*\aAddRoomb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/hotels/{hotel_id}/rooms\x12\xb6\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/hotels/{hotel_id}/rooms\x12\xba\x01\n" +
 	"\n" +
-	"UpdateRoom\x12\x18.hotel.UpdateRoomRequest\x1a\v.hotel.Room\"\x80\x01\x92AR\x12\x17Update room information\x1a\x19Requires admin privileges*\n" +
+	"UpdateRoom\x12\x18.hotel.UpdateRoomRequest\x1a\v.hotel.Room\"\x84\x01\x92AR\x12\x17Update room information\x1a\x19Requires admin privileges*\n" +
 	"UpdateRoomb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02%:\x01*\x1a /v1/hotels/{hotel_id}/rooms/{id}\x12\xb0\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02%:\x01*\x1a /v1/hotels/{hotel_id}/rooms/{id}\x12\xb4\x01\n" +
 	"\n" +
-	"DeleteRoom\x12\x18.hotel.DeleteRoomRequest\x1a\x15.hotel.DeleteResponse\"q\x92AF\x12\vDelete room\x1a\x19Requires admin privileges*\n" +
+	"DeleteRoom\x12\x18.hotel.DeleteRoomRequest\x1a\x15.hotel.DeleteResponse\"u\x92AF\x12\vDelete room\x1a\x19Requires admin privileges*\n" +
 	"DeleteRoomb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\"* /v1/hotels/{hotel_id}/rooms/{id}\x12\xcf\x01\n" +
-	"\x11CheckAvailability\x12\x1a.hotel.AvailabilityRequest\x1a\x1b.hotel.AvailabilityResponse\"\x80\x01\x92AS\x12\x17Check room availability\x1a%Check available rooms for given dates*\x11CheckAvailability\x82\xd3\xe4\x93\x02$\x12\"/v1/hotels/{hotel_id}/availabilityB\x8d\x02\x92A\xd1\x01\x12\x84\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\"* /v1/hotels/{hotel_id}/rooms/{id}\x12\xd3\x01\n" +
+	"\x11CheckAvailability\x12\x1a.hotel.AvailabilityRequest\x1a\x1b.hotel.AvailabilityResponse\"\x84\x01\x92AS\x12\x17Check room availability\x1a%Check available rooms for given dates*\x11CheckAvailability\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02$\x12\"/v1/hotels/{hotel_id}/availabilityB\x8d\x02\x92A\xd1\x01\x12\x84\x01\n" +
 	"\rHotel Service\x12 Hotel and room management system\"L\n" +
 	"\fSupport Team\x12!https://hotel-service.com/support\x1a\x19support@hotel-service.com2\x031.0ZH\n" +
 	"F\n" +
@@ -976,7 +1132,7 @@ func file_proto_hotel_proto_rawDescGZIP() []byte {
 	return file_proto_hotel_proto_rawDescData
 }
 
-var file_proto_hotel_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_proto_hotel_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_proto_hotel_proto_goTypes = []any{
 	(*Hotel)(nil),                 // 0: hotel.Hotel
 	(*Room)(nil),                  // 1: hotel.Room
@@ -992,39 +1148,50 @@ var file_proto_hotel_proto_goTypes = []any{
 	(*DeleteRoomRequest)(nil),     // 11: hotel.DeleteRoomRequest
 	(*AvailabilityRequest)(nil),   // 12: hotel.AvailabilityRequest
 	(*AvailabilityResponse)(nil),  // 13: hotel.AvailabilityResponse
-	nil,                           // 14: hotel.Hotel.MetadataEntry
-	(*timestamppb.Timestamp)(nil), // 15: google.protobuf.Timestamp
+	(*GetRoomRequest)(nil),        // 14: hotel.GetRoomRequest
+	(*ListRoomsRequest)(nil),      // 15: hotel.ListRoomsRequest
+	(*RoomList)(nil),              // 16: hotel.RoomList
+	nil,                           // 17: hotel.Hotel.MetadataEntry
+	(*timestamppb.Timestamp)(nil), // 18: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),         // 19: google.protobuf.Empty
 }
 var file_proto_hotel_proto_depIdxs = []int32{
 	1,  // 0: hotel.Hotel.rooms:type_name -> hotel.Room
-	14, // 1: hotel.Hotel.metadata:type_name -> hotel.Hotel.MetadataEntry
+	17, // 1: hotel.Hotel.metadata:type_name -> hotel.Hotel.MetadataEntry
 	0,  // 2: hotel.HotelList.hotels:type_name -> hotel.Hotel
-	15, // 3: hotel.AvailabilityRequest.start_date:type_name -> google.protobuf.Timestamp
-	15, // 4: hotel.AvailabilityRequest.end_date:type_name -> google.protobuf.Timestamp
+	18, // 3: hotel.AvailabilityRequest.start_date:type_name -> google.protobuf.Timestamp
+	18, // 4: hotel.AvailabilityRequest.end_date:type_name -> google.protobuf.Timestamp
 	1,  // 5: hotel.AvailabilityResponse.available_rooms:type_name -> hotel.Room
-	2,  // 6: hotel.HotelService.CreateHotel:input_type -> hotel.CreateHotelRequest
-	3,  // 7: hotel.HotelService.UpdateHotel:input_type -> hotel.UpdateHotelRequest
-	4,  // 8: hotel.HotelService.DeleteHotel:input_type -> hotel.DeleteHotelRequest
-	6,  // 9: hotel.HotelService.GetHotel:input_type -> hotel.GetHotelRequest
-	7,  // 10: hotel.HotelService.SearchHotels:input_type -> hotel.SearchRequest
-	9,  // 11: hotel.HotelService.AddRoom:input_type -> hotel.AddRoomRequest
-	10, // 12: hotel.HotelService.UpdateRoom:input_type -> hotel.UpdateRoomRequest
-	11, // 13: hotel.HotelService.DeleteRoom:input_type -> hotel.DeleteRoomRequest
-	12, // 14: hotel.HotelService.CheckAvailability:input_type -> hotel.AvailabilityRequest
-	0,  // 15: hotel.HotelService.CreateHotel:output_type -> hotel.Hotel
-	0,  // 16: hotel.HotelService.UpdateHotel:output_type -> hotel.Hotel
-	5,  // 17: hotel.HotelService.DeleteHotel:output_type -> hotel.DeleteResponse
-	0,  // 18: hotel.HotelService.GetHotel:output_type -> hotel.Hotel
-	8,  // 19: hotel.HotelService.SearchHotels:output_type -> hotel.HotelList
-	1,  // 20: hotel.HotelService.AddRoom:output_type -> hotel.Room
-	1,  // 21: hotel.HotelService.UpdateRoom:output_type -> hotel.Room
-	5,  // 22: hotel.HotelService.DeleteRoom:output_type -> hotel.DeleteResponse
-	13, // 23: hotel.HotelService.CheckAvailability:output_type -> hotel.AvailabilityResponse
-	15, // [15:24] is the sub-list for method output_type
-	6,  // [6:15] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	1,  // 6: hotel.RoomList.rooms:type_name -> hotel.Room
+	2,  // 7: hotel.HotelService.CreateHotel:input_type -> hotel.CreateHotelRequest
+	3,  // 8: hotel.HotelService.UpdateHotel:input_type -> hotel.UpdateHotelRequest
+	4,  // 9: hotel.HotelService.DeleteHotel:input_type -> hotel.DeleteHotelRequest
+	6,  // 10: hotel.HotelService.GetHotel:input_type -> hotel.GetHotelRequest
+	7,  // 11: hotel.HotelService.SearchHotels:input_type -> hotel.SearchRequest
+	19, // 12: hotel.HotelService.ListHotels:input_type -> google.protobuf.Empty
+	15, // 13: hotel.HotelService.ListRooms:input_type -> hotel.ListRoomsRequest
+	14, // 14: hotel.HotelService.GetRoom:input_type -> hotel.GetRoomRequest
+	9,  // 15: hotel.HotelService.AddRoom:input_type -> hotel.AddRoomRequest
+	10, // 16: hotel.HotelService.UpdateRoom:input_type -> hotel.UpdateRoomRequest
+	11, // 17: hotel.HotelService.DeleteRoom:input_type -> hotel.DeleteRoomRequest
+	12, // 18: hotel.HotelService.CheckAvailability:input_type -> hotel.AvailabilityRequest
+	0,  // 19: hotel.HotelService.CreateHotel:output_type -> hotel.Hotel
+	0,  // 20: hotel.HotelService.UpdateHotel:output_type -> hotel.Hotel
+	5,  // 21: hotel.HotelService.DeleteHotel:output_type -> hotel.DeleteResponse
+	0,  // 22: hotel.HotelService.GetHotel:output_type -> hotel.Hotel
+	8,  // 23: hotel.HotelService.SearchHotels:output_type -> hotel.HotelList
+	8,  // 24: hotel.HotelService.ListHotels:output_type -> hotel.HotelList
+	16, // 25: hotel.HotelService.ListRooms:output_type -> hotel.RoomList
+	1,  // 26: hotel.HotelService.GetRoom:output_type -> hotel.Room
+	1,  // 27: hotel.HotelService.AddRoom:output_type -> hotel.Room
+	1,  // 28: hotel.HotelService.UpdateRoom:output_type -> hotel.Room
+	5,  // 29: hotel.HotelService.DeleteRoom:output_type -> hotel.DeleteResponse
+	13, // 30: hotel.HotelService.CheckAvailability:output_type -> hotel.AvailabilityResponse
+	19, // [19:31] is the sub-list for method output_type
+	7,  // [7:19] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_hotel_proto_init() }
@@ -1038,7 +1205,7 @@ func file_proto_hotel_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_hotel_proto_rawDesc), len(file_proto_hotel_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

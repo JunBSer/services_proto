@@ -7,6 +7,7 @@
 package authpb
 
 import (
+	_ "github.com/JunBSer/options/auth_options/gen/go"
 	_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2/options"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -24,7 +25,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Common messages
 type UUID struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Value         string                 `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
@@ -1357,7 +1357,7 @@ var File_proto_auth_proto protoreflect.FileDescriptor
 
 const file_proto_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/auth.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\";\n" +
+	"\x10proto/auth.proto\x12\x05proto\x1a\x1cgoogle/api/annotations.proto\x1a.protoc-gen-openapiv2/options/annotations.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x12auth_options.proto\";\n" +
 	"\x04UUID\x123\n" +
 	"\x05value\x18\x01 \x01(\tB\x1d\x92A\x1a2\x18UUID v4 in string formatR\x05value\"\xae\x01\n" +
 	"\aJWTPair\x12J\n" +
@@ -1437,9 +1437,9 @@ const file_proto_auth_proto_rawDesc = "" +
 	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampB\x1c\x92A\x192\x17User creation timestampR\tcreatedAt\"\x96\x01\n" +
 	"\x14DeleteAccountRequest\x12;\n" +
 	"\faccess_token\x18\x01 \x01(\tB\x18\x92A\x152\x13JWT token to deleteR\vaccessToken\x12A\n" +
-	"\bpassword\x18\x02 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\xd1\x19\n" +
-	"\x04Auth\x12\xf5\x01\n" +
-	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xc0\x01\x92A\xa3\x01\n" +
+	"\bpassword\x18\x02 \x01(\tB%\x92A\"2 User's password for confirmationR\bpassword2\x81\x1a\n" +
+	"\x04Auth\x12\xf9\x01\n" +
+	"\x05Login\x12\x13.proto.LoginRequest\x1a\x14.proto.LoginResponse\"\xc4\x01\x92A\xa3\x01\n" +
 	"\x0eAuthentication\x12\n" +
 	"User login\x1a)Authenticates user and returns JWT tokensJ%\n" +
 	"\x03200\x12\x1e\n" +
@@ -1447,16 +1447,16 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x03400\x12\x15\n" +
 	"\x13Invalid credentialsJ\x15\n" +
 	"\x03401\x12\x0e\n" +
-	"\fUnauthorized\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/auth/login\x12\xf7\x01\n" +
-	"\bRegister\x12\x16.proto.RegisterRequest\x1a\x17.proto.RegisterResponse\"\xb9\x01\x92A\x99\x01\n" +
+	"\fUnauthorized\x90\xb5\x18\x00\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/auth/login\x12\xfb\x01\n" +
+	"\bRegister\x12\x16.proto.RegisterRequest\x1a\x17.proto.RegisterResponse\"\xbd\x01\x92A\x99\x01\n" +
 	"\x0eAuthentication\x12\x11Register new user\x1a\x18Creates new user accountJ\"\n" +
 	"\x03201\x12\x1b\n" +
 	"\x19User created successfullyJ\x18\n" +
 	"\x03400\x12\x11\n" +
 	"\x0fInvalid requestJ\x1c\n" +
 	"\x03409\x12\x15\n" +
-	"\x13User already exists\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/auth/register\x12\xe8\x01\n" +
-	"\x06Logout\x12\x14.proto.LogoutRequest\x1a\x15.proto.LogoutResponse\"\xb0\x01\x92A\x92\x01\n" +
+	"\x13User already exists\x90\xb5\x18\x00\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/auth/register\x12\xec\x01\n" +
+	"\x06Logout\x12\x14.proto.LogoutRequest\x1a\x15.proto.LogoutResponse\"\xb4\x01\x92A\x92\x01\n" +
 	"\x0eAuthentication\x12\vUser logout\x1a(Invalidates user's authentication tokensJ \n" +
 	"\x03204\x12\x19\n" +
 	"\x17Successfully logged outJ\x15\n" +
@@ -1464,8 +1464,8 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\fUnauthorizedb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/auth/logout\x12\xad\x02\n" +
-	"\x0eChangePassword\x12\x1c.proto.ChangePasswordRequest\x1a\x1d.proto.ChangePasswordResponse\"\xdd\x01\x92A\xb9\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/auth/logout\x12\xb1\x02\n" +
+	"\x0eChangePassword\x12\x1c.proto.ChangePasswordRequest\x1a\x1d.proto.ChangePasswordResponse\"\xe1\x01\x92A\xb9\x01\n" +
 	"\x0fUser Management\x12\x14Change user password\x1a%Updates authenticated user's passwordJ&\n" +
 	"\x03204\x12\x1f\n" +
 	"\x1dPassword changed successfullyJ\x18\n" +
@@ -1475,14 +1475,14 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\fUnauthorizedb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/v1/users/me/password\x12\xea\x01\n" +
-	"\fRefreshToken\x12\x15.proto.RefreshRequest\x1a\x16.proto.RefreshResponse\"\xaa\x01\x92A\x8b\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x1a:\x01*\x1a\x15/v1/users/me/password\x12\xee\x01\n" +
+	"\fRefreshToken\x12\x15.proto.RefreshRequest\x1a\x16.proto.RefreshResponse\"\xae\x01\x92A\x8b\x01\n" +
 	"\x0eAuthentication\x12\x0eRefresh tokens\x1a*Generates new JWT pair using refresh tokenJ\x1d\n" +
 	"\x03200\x12\x16\n" +
 	"\x14New tokens generatedJ\x1e\n" +
 	"\x03401\x12\x17\n" +
-	"\x15Invalid refresh token\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/auth/refresh\x12\xa9\x02\n" +
-	"\rDeleteAccount\x12\x1b.proto.DeleteAccountRequest\x1a\r.proto.Status\"\xeb\x01\x92A\xd0\x01\n" +
+	"\x15Invalid refresh token\x90\xb5\x18\x00\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/auth/refresh\x12\xad\x02\n" +
+	"\rDeleteAccount\x12\x1b.proto.DeleteAccountRequest\x1a\r.proto.Status\"\xef\x01\x92A\xd0\x01\n" +
 	"\x0fUser Management\x12\x13Delete user account\x1a)Permanently delete current user's accountJ%\n" +
 	"\x03204\x12\x1e\n" +
 	"\x1cAccount deleted successfullyJ\x19\n" +
@@ -1494,17 +1494,17 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\tForbiddenb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11:\x01**\f/v1/users/me\x12\xeb\x01\n" +
-	"\rUpdateProfile\x12\x1b.proto.UpdateProfileRequest\x1a\x13.proto.UserResponse\"\xa7\x01\x92A\x8c\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x00\x82\xd3\xe4\x93\x02\x11:\x01**\f/v1/users/me\x12\xef\x01\n" +
+	"\rUpdateProfile\x12\x1b.proto.UpdateProfileRequest\x1a\x13.proto.UserResponse\"\xab\x01\x92A\x8c\x01\n" +
 	"\x0fUser Management\x12\x13Update user profile\x1a+Updates authenticated user's name and emailJ%\n" +
 	"\x03200\x12\x1e\n" +
 	"\x1cProfile updated successfullyb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11:\x01*\x1a\f/v1/users/me\x12J\n" +
-	"\rValidateToken\x12\x1b.proto.ValidateTokenRequest\x1a\x1c.proto.ValidateTokenResponse\x12\x91\x02\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x01\x82\xd3\xe4\x93\x02\x11:\x01*\x1a\f/v1/users/me\x12J\n" +
+	"\rValidateToken\x12\x1b.proto.ValidateTokenRequest\x1a\x1c.proto.ValidateTokenResponse\x12\x95\x02\n" +
 	"\n" +
-	"CreateUser\x12\x18.proto.CreateUserRequest\x1a\x13.proto.UserResponse\"\xd3\x01\x92A\xb5\x01\n" +
+	"CreateUser\x12\x18.proto.CreateUserRequest\x1a\x13.proto.UserResponse\"\xd7\x01\x92A\xb5\x01\n" +
 	"\x05Admin\x12\x17Create new user (Admin)\x1a1Create new user account with specified parametersJ\"\n" +
 	"\x03201\x12\x1b\n" +
 	"\x19User created successfullyJ*\n" +
@@ -1512,8 +1512,8 @@ const file_proto_auth_proto_rawDesc = "" +
 	"!Forbidden - admin access requiredb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/admin/users\x12\x9a\x02\n" +
-	"\aGetUser\x12\x15.proto.GetUserRequest\x1a\x13.proto.UserResponse\"\xe2\x01\x92A\xbd\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/admin/users\x12\x9e\x02\n" +
+	"\aGetUser\x12\x15.proto.GetUserRequest\x1a\x13.proto.UserResponse\"\xe6\x01\x92A\xbd\x01\n" +
 	"\x05Admin\x12\x18Get user details (Admin)\x1a\"Retrieve detailed user informationJ\x1f\n" +
 	"\x03200\x12\x18\n" +
 	"\x16User details retrievedJ*\n" +
@@ -1523,8 +1523,8 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0eUser not foundb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/admin/users/{user_id}\x12\xf6\x01\n" +
-	"\tListUsers\x12\x17.proto.ListUsersRequest\x1a\x18.proto.ListUsersResponse\"\xb5\x01\x92A\x9a\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/admin/users/{user_id}\x12\xfa\x01\n" +
+	"\tListUsers\x12\x17.proto.ListUsersRequest\x1a\x18.proto.ListUsersResponse\"\xb9\x01\x92A\x9a\x01\n" +
 	"\x05Admin\x12\x12List users (Admin)\x1a Retrieve paginated list of usersJ\x1d\n" +
 	"\x03200\x12\x16\n" +
 	"\x14Users list retrievedJ*\n" +
@@ -1532,9 +1532,9 @@ const file_proto_auth_proto_rawDesc = "" +
 	"!Forbidden - admin access requiredb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/admin/users\x12\xa2\x02\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/admin/users\x12\xa6\x02\n" +
 	"\n" +
-	"UpdateUser\x12\x18.proto.UpdateUserRequest\x1a\x13.proto.UserResponse\"\xe4\x01\x92A\xbc\x01\n" +
+	"UpdateUser\x12\x18.proto.UpdateUserRequest\x1a\x13.proto.UserResponse\"\xe8\x01\x92A\xbc\x01\n" +
 	"\x05Admin\x12\x13Update user (Admin)\x1a#Update user details and permissionsJ\"\n" +
 	"\x03200\x12\x1b\n" +
 	"\x19User updated successfullyJ*\n" +
@@ -1544,9 +1544,9 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0eUser not foundb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v1/admin/users/{user_id}\x12\x99\x02\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x1e:\x01*\x1a\x19/v1/admin/users/{user_id}\x12\x9d\x02\n" +
 	"\n" +
-	"DeleteUser\x12\x14.proto.DeleteRequest\x1a\x15.proto.DeleteResponse\"\xdd\x01\x92A\xb8\x01\n" +
+	"DeleteUser\x12\x14.proto.DeleteRequest\x1a\x15.proto.DeleteResponse\"\xe1\x01\x92A\xb8\x01\n" +
 	"\x05Admin\x12\x13Delete user (Admin)\x1a\x1fPermanently delete user accountJ\"\n" +
 	"\x03204\x12\x1b\n" +
 	"\x19User deleted successfullyJ*\n" +
@@ -1556,7 +1556,7 @@ const file_proto_auth_proto_rawDesc = "" +
 	"\x0eUser not foundb\x10\n" +
 	"\x0e\n" +
 	"\n" +
-	"bearerAuth\x12\x00\x82\xd3\xe4\x93\x02\x1b*\x19/v1/admin/users/{user_id}B\xbd\x02\x92A\x83\x02\x12\x89\x01\n" +
+	"bearerAuth\x12\x00\x90\xb5\x18\x02\x82\xd3\xe4\x93\x02\x1b*\x19/v1/admin/users/{user_id}B\xbd\x02\x92A\x83\x02\x12\x89\x01\n" +
 	"\x10Auth Service API\"D\n" +
 	"\aJunBSer\x12\x1ahttps://github.com/JunBSer\x1a\x1daleksei.radzetskiiw@gmail.com**\n" +
 	"\x03MIT\x12#https://opensource.org/licenses/MIT2\x032.0\x1a\x0elocalhost:8080*\x01\x012\x10application/json:\x10application/jsonZ>\n" +
