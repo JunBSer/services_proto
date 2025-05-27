@@ -308,7 +308,8 @@ message SearchRequest {
   }];
 
   repeated string required_amenities = 2 [(grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-    description: "Required amenities filter";
+    description: "Required amenities filte
+    r";
   }];
 }
 

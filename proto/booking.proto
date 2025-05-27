@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package booking;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+option go_package = "github.com/JunBSer/services_proto/booking/gen/go;bookpb";
+
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Booking Service API";
+    version: "1.0";
+    description: "API for managing hotel room bookings";
+  };
+  schemes: HTTP;
+  consumes: "application/json";
+  produces: "application/json";
+  security_definitions: {
+    security: {
+      key: "bearer";
+      value: {
+        type: TYPE_API_KEY;
+        in: IN_HEADER;
+        name: "Authorization";
+        description: "Authentication token, prefixed by Bearer: Bearer <token>";
+      }
+    }
+  };
+  security: {
+    security_requirement: {
+      key: "bearer";
+      value: {};
+    }
+  };
+};
+
+service BookingService {
+  rpc CreateBooking(CreateBookingRequest) returns (BookingResponse) {
+    option (google.api.http) = {
+      post: "/v1/bookings"
+      body: "*"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Create new booking"
+      description: "Creates a new booking for specified room and dates"
+      tags: "bookings"
+    };
+  }
+
+  rpc GetBooking(GetBookingRequest) returns (BookingDetails) {
+    option (google.api.http) = {
+      get: "/v1/bookings/{booking_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Get booking details"
+      description: "Returns full details of specified booking"
+      tags: "bookings"
+    };
+  }
+
+  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse) {
+    option (google.api.http) = {
+      delete: "/v1/bookings/{booking_id}"
+    };
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "Cancel booking"
+      description: "Cancels existing booking and releases resources"
+      tags: "bookings"
+    };
+  }
+}
+
+message CreateBookingRequest {
+    string hotel_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Unique identifier for the room"
+        }
+    ];
+
+    string room_id = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Unique identifier for the room"
+    
+        }
+    ];
+
+  google.protobuf.Timestamp start_date = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Booking start date and time in UTC"
+    
+        }
+    ];
+  google.protobuf.Timestamp end_date = 4 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Booking end date and time in UTC"
+    
+        }
+    ];
+}
+
+message BookingResponse {
+    string booking_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Unique booking identifier"
+        }
+    ];
+    Status status = 2 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        }
+    ];
+    google.protobuf.Timestamp created_at = 3 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Booking creation timestamp"
+        }
+    ];
+
+}
+
+message GetBookingRequest {
+    string booking_id = 1 [
+        (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+        description: "Unique booking identifier"
+        }
+    ];
+}
+
+message BookingDetails {
+  string booking_id = 1;
+  string room_id = 2;
+  string hotel_id = 3;
+  string user_id = 4;
+  Status status = 5;
+  google.protobuf.Timestamp start_date = 6;
+  google.protobuf.Timestamp end_date = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+  
+  message RoomDetails {
+    string name = 1;
+    string description = 2;
+    float price = 3;
+    repeated string amenities = 4;
+  }
+  
+  RoomDetails room_details = 10;
+}
+
+message CancelBookingRequest {
+  string booking_id = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Unique booking identifier to cancel"
+    }
+  ];
+}
+
+
+message CancelBookingResponse {
+  bool success = 1 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Cancellation operation result"
+    }
+  ];
+  google.protobuf.Timestamp cancelled_at = 2 [
+    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
+      description: "Cancellation timestamp"
+    }
+  ];
+}
+
+enum Status {
+    STATUS_UNKNOWN = 0;
+    CONFIRMED = 1;
+    CANCELLED = 3;
+    FAILED = 4;
+  }
