@@ -72,27 +72,7 @@ service BookingService {
     };
   }
 
-  // Новые методы только для администраторов
-  rpc UpdateBooking(UpdateBookingRequest) returns (BookingResponse) {
-    option (google.api.http) = {
-      patch: "/v1/bookings/{booking_id}"
-      body: "*"
-    };
-    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
-      summary: "Update booking (Admin only)"
-      description: "Updates existing booking details. Requires admin privileges"
-      tags: "admin"
-      security: {
-        security_requirement: {
-          key: "bearer";
-          value: {
-            scope: "admin";
-          }
-        }
-      }
-    };
-  }
-
+ 
   rpc ListBookings(ListBookingsRequest) returns (ListBookingsResponse) {
     option (google.api.http) = {
       get: "/v1/admin/bookings"
@@ -218,28 +198,6 @@ message CancelBookingResponse {
 }
 
 //admin
-message UpdateBookingRequest {
-  string booking_id = 1 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "ID of booking to update"
-    }
-  ];
-  string room_id = 2 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "New room ID (optional)"
-    }
-  ];
-  google.protobuf.Timestamp start_date = 3 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "New start date (optional)"
-    }
-  ];
-  google.protobuf.Timestamp end_date = 4 [
-    (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_field) = {
-      description: "New end date (optional)"
-    }
-  ];
-}
 
 message ListBookingsRequest {
   int32 page_size = 1 [
