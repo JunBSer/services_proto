@@ -638,13 +638,13 @@ const file_proto_booking_proto_rawDesc = "" +
 	"\tCANCELLED\x10\x03\x12\n" +
 	"\n" +
 	"\x06FAILED\x10\x04\x12\f\n" +
-	"\bMODIFIED\x10\x052\xac\x06\n" +
+	"\bMODIFIED\x10\x052\xa4\x06\n" +
 	"\x0eBookingService\x12\xb6\x01\n" +
 	"\rCreateBooking\x12\x1d.booking.CreateBookingRequest\x1a\x18.booking.BookingResponse\"l\x92AR\n" +
-	"\bbookings\x12\x12Create new booking\x1a2Creates a new booking for specified room and dates\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/bookings\x12\xb1\x01\n" +
+	"\bbookings\x12\x12Create new booking\x1a2Creates a new booking for specified room and dates\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/bookings\x12\xa9\x01\n" +
 	"\n" +
-	"GetBooking\x12\x1a.booking.GetBookingRequest\x1a\x17.booking.BookingDetails\"n\x92AJ\n" +
-	"\bbookings\x12\x13Get booking details\x1a)Returns full details of specified booking\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/bookings/{booking_id}\x12\xbf\x01\n" +
+	"GetBooking\x12\x1a.booking.GetBookingRequest\x1a\x17.booking.BookingDetails\"f\x92AJ\n" +
+	"\bbookings\x12\x13Get booking details\x1a)Returns full details of specified booking\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/getbooking\x12\xbf\x01\n" +
 	"\rCancelBooking\x12\x1d.booking.CancelBookingRequest\x1a\x1e.booking.CancelBookingResponse\"o\x92AK\n" +
 	"\bbookings\x12\x0eCancel booking\x1a/Cancels existing booking and releases resources\x82\xd3\xe4\x93\x02\x1b*\x19/v1/bookings/{booking_id}\x12\xea\x01\n" +
 	"\fListBookings\x12\x1c.booking.ListBookingsRequest\x1a\x1d.booking.ListBookingsResponse\"\x9c\x01\x92A\x7f\n" +

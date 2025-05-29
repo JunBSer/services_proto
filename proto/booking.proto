@@ -52,7 +52,8 @@ service BookingService {
 
   rpc GetBooking(GetBookingRequest) returns (BookingDetails) {
     option (google.api.http) = {
-      get: "/v1/bookings/{booking_id}"
+      post: "/v1/getbooking"
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Get booking details"
