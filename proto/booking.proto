@@ -64,7 +64,8 @@ service BookingService {
 
   rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse) {
     option (google.api.http) = {
-      delete: "/v1/bookings/{booking_id}"
+      delete: "/v1/cancel/{booking_id}"
+      body: "*"
     };
     option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
       summary: "Cancel booking"
